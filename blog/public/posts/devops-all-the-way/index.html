@@ -1,0 +1,343 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>DevOps All the Way - somethingAzure</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="somethingAzure a blog on tinkering in Azure" />
+<meta name="author" content="Bas van de Sande" /><meta property="og:title" content="DevOps All the Way" />
+<meta property="og:description" content="In Practice what you preach I wrote that I decided to host my blog on the Azure platform, using Hugo as content management system, Blob Storage and Azure CDN for hosting the blog." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.somethingAzure.com/posts/devops-all-the-way/" /><meta property="og:image" content="https://blog.somethingAzure.com/buildsucceeded.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-07-30T09:00:06+02:00" />
+<meta property="article:modified_time" content="2021-07-30T09:00:06+02:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.somethingAzure.com/buildsucceeded.png"/>
+
+<meta name="twitter:title" content="DevOps All the Way"/>
+<meta name="twitter:description" content="In Practice what you preach I wrote that I decided to host my blog on the Azure platform, using Hugo as content management system, Blob Storage and Azure CDN for hosting the blog."/>
+
+<meta name="generator" content="Hugo 0.88.1" />
+    
+    <link rel="shortcut icon" href="img/favicon.ico" />
+  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://blog.somethingAzure.com/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" /></head>
+
+<body>
+  <div id="container">
+    <header>
+      
+      <h1>
+                <a href="/"><img src="/img/banner.png" class="image-clean" alt="blog.somethingAzure.com" /></a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://twitter.com/basvandesande" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://linkedin.com/in/basvandesande" title="LinkedIn">
+               <i class="fab fa-linkedin fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://github.com/basvandesande" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="mailto:bas@vd-sande.nl" title="Email me">
+               <i class="fas fa-envelope fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="/index.xml" title="RSS">
+               <i class="fas fa-rss fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>Tinkering in the cloud&hellip;</em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/categories">
+                <i class="fa-li fa  fa-lg"></i><span>Categories</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>DevOps All the Way</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-07-30T09:00:06&#43;02:00">Jul 30, 2021</time>
+        </li>
+        
+        
+        <li>
+            Categories:
+            <em>
+                
+                    
+                    <a href="/categories/technology">technology</a>
+                
+            </em>
+        </li>
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/devops">#devops</a>
+                
+                    , 
+                    <a href="/tags/hugo">#hugo</a>
+                
+                    , 
+                    <a href="/tags/pipeline">#pipeline</a>
+                
+            </em>
+        </li>
+        
+
+        <li>2 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+<div class="featured_image">
+    <a href="https://blog.somethingAzure.com/posts/devops-all-the-way/" title="DevOps All the Way">
+        <img src="/buildsucceeded.png">
+    </a>
+</div>
+
+
+
+    <p>In <a href="https://blog.somethingAzure.com/posts/practice-what-you-preach/" title="Practice what you Preach">Practice what you preach</a> I wrote that I decided to host my blog on the Azure platform, using Hugo as content management system, Blob Storage and Azure CDN for hosting the blog. The only thing lacking is a workflow of writing content, approving it and publishing it on the web.</p>
+<p>As I work for a <a href="https://www.xpirit.com">company</a> that specialized on Azure and DevOps, I decided to take the plunge and go DevOps all the way. Doing some googling, I found out that there were some great tutorials out there to use an Azure DevOps CI/CD pipeline in combination with Hugo to compile and publish the blog. As a starter I followed this <a href="https://medium.com/@kurtmkurtm/setting-up-a-blog-with-the-hugo-framework-on-azure-blob-storage-12605609a90">writing</a> by kurtmkurtm.</p>
+<p>There was however one part of the instruction I wasn&rsquo;t happy with. In the description the author created a CI pipeline using a yaml pipeline, the CD release pipeline was setup by clicking it together. In a DevOps world you have to automate as much as possible to make it repeatable in an easy way (building, testing, deploying). Personally, I consider a CI/CD pipeline as a part of the code you write, thus it needs to be in code (and not in a hybrid fashion).</p>
+<p>What I did, was adding stages to the original pipeline. One stage for build and one stage for deployment.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e">#</span>
+<span style="color:#75715e"># Azure pipeline to build and publishe a hugo blog release</span>
+<span style="color:#75715e"># github.com/kurtmkurtm</span>
+<span style="color:#75715e"># modified by Bas van de Sande</span>
+<span style="color:#75715e">#</span>
+
+<span style="color:#f92672">trigger</span>:
+- <span style="color:#ae81ff">main</span>
+
+<span style="color:#f92672">pool</span>:
+  <span style="color:#f92672">vmImage</span>: <span style="color:#e6db74">&#39;ubuntu-latest&#39;</span>
+
+<span style="color:#f92672">variables</span>:
+- <span style="color:#f92672">group</span>: <span style="color:#ae81ff">blogvars</span>
+   
+<span style="color:#f92672">stages</span>:
+- <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">Generateblog</span>
+  <span style="color:#f92672">displayName</span>: <span style="color:#ae81ff">Generate Blog</span>
+  <span style="color:#f92672">jobs</span>:
+  - <span style="color:#f92672">job</span>: 
+    <span style="color:#f92672">displayName</span>: <span style="color:#ae81ff">Generate Blog</span>
+    <span style="color:#f92672">steps</span>:
+    - <span style="color:#f92672">script</span>: |<span style="color:#e6db74">
+</span><span style="color:#e6db74">        </span>        <span style="color:#ae81ff">wget -c https://github.com/gohugoio/hugo/releases/download/v$(hugo.version)/hugo_$(hugo.version)_Linux-64bit.deb   </span>
+      <span style="color:#f92672">displayName</span>: <span style="color:#e6db74">&#39;Download HUGO&#39;</span>
+
+    - <span style="color:#f92672">script</span>: <span style="color:#e6db74">&#39;sudo dpkg -i hugo_$(hugo.version)_Linux-64bit.deb&#39;</span>
+      <span style="color:#f92672">displayName</span>: <span style="color:#e6db74">&#39;Install HUGO&#39;</span>
+
+    - <span style="color:#f92672">script</span>: |<span style="color:#e6db74">
+</span><span style="color:#e6db74">        cd $(blog.path)
+</span><span style="color:#e6db74">        hugo  --log -v</span>        
+      <span style="color:#f92672">displayName</span>: <span style="color:#e6db74">&#39;Generate Blog&#39;</span>
+
+    - <span style="color:#f92672">task</span>: <span style="color:#ae81ff">CopyFiles@2</span>
+      <span style="color:#f92672">displayName</span>: <span style="color:#e6db74">&#39;Copy Blog&#39;</span>
+      <span style="color:#f92672">inputs</span>:
+        <span style="color:#f92672">SourceFolder</span>: <span style="color:#e6db74">&#39;$(blog.path)/public&#39;</span>
+        <span style="color:#f92672">Contents</span>: <span style="color:#e6db74">&#39;**&#39;</span>
+        <span style="color:#f92672">TargetFolder</span>: <span style="color:#e6db74">&#39;$(Build.ArtifactStagingDirectory)&#39;</span>
+
+    - <span style="color:#f92672">task</span>: <span style="color:#ae81ff">PublishBuildArtifacts@1</span>
+      <span style="color:#f92672">displayName</span>: <span style="color:#e6db74">&#39;Publish Artifacts&#39;</span>
+      <span style="color:#f92672">inputs</span>:
+        <span style="color:#f92672">PathtoPublish</span>: <span style="color:#e6db74">&#39;$(Build.ArtifactStagingDirectory)&#39;</span>
+        <span style="color:#f92672">ArtifactName</span>: <span style="color:#e6db74">&#39;drop&#39;</span>
+        <span style="color:#f92672">publishLocation</span>: <span style="color:#e6db74">&#39;Container&#39;</span>
+
+- <span style="color:#f92672">stage</span>: <span style="color:#ae81ff">PubllishBlog</span>
+  <span style="color:#f92672">displayName</span>: <span style="color:#ae81ff">Publish Blog</span>
+  <span style="color:#f92672">jobs</span>:
+  - <span style="color:#f92672">job</span>:
+    <span style="color:#f92672">displayName</span>: <span style="color:#ae81ff">Publish Blog</span>
+    <span style="color:#f92672">steps</span>:
+    - <span style="color:#f92672">task</span>: <span style="color:#ae81ff">DownloadBuildArtifacts@0</span>
+      <span style="color:#f92672">displayName</span>: <span style="color:#ae81ff">Download Artifacts</span>
+      <span style="color:#f92672">inputs</span>:
+        <span style="color:#f92672">buildType</span>: <span style="color:#e6db74">&#39;current&#39;</span>
+        <span style="color:#f92672">downloadType</span>: <span style="color:#e6db74">&#39;specific&#39;</span>
+        <span style="color:#f92672">itemPattern</span>: <span style="color:#e6db74">&#39;**&#39;</span>
+        <span style="color:#f92672">downloadPath</span>: <span style="color:#e6db74">&#39;$(System.ArtifactsDirectory)&#39;</span>
+    
+    - <span style="color:#f92672">task</span>: <span style="color:#ae81ff">AzureCLI@2</span>
+      <span style="color:#f92672">displayName</span>: <span style="color:#ae81ff">Copy web to Blob storage</span>
+      <span style="color:#f92672">inputs</span>:
+        <span style="color:#f92672">azureSubscription</span>: <span style="color:#e6db74">&#39;$(azureSubscription)&#39;</span>
+        <span style="color:#f92672">scriptType</span>: <span style="color:#e6db74">&#39;bash&#39;</span>
+        <span style="color:#f92672">scriptLocation</span>: <span style="color:#e6db74">&#39;inlineScript&#39;</span>
+        <span style="color:#f92672">inlineScript</span>: <span style="color:#ae81ff">az storage blob upload-batch -d &#39;$web&#39; -s $(System.ArtifactsDirectory)/drop  --account-name $(storageAccountName) --account-key $(storageAccountKey)</span>
+</code></pre></div><p>In order to make the pipeline reusable, I took out all literals and placed them into variables. These variables are maintained in the Azure DevOps Library section below.</p>
+<p><img src="/devops-all-the-way.png" alt="Pipeline variables"></p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://blog.somethingAzure.com/posts/practice-what-you-preach/"><i class="fa fa-chevron-circle-left"></i> Practice what you preach!</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://blog.somethingAzure.com/posts/certification-renewal/">Certification Renewal <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+        <section class="comments-block">
+      <button id="show-comments" style="display: none;"><i class="fa fa-comments"></i> Add/View Comments</button>
+</section>
+
+<section id="disqus_thread"></section>
+
+<script>
+      (function () {
+            
+            
+            if (window.location.hostname == "localhost")
+                  return;
+
+            var disqus_loaded = false;
+            var disqus_shortname = 'somethingAzure';
+            var disqus_button = document.getElementById("show-comments");
+
+            var disqus_autoload =  null ;
+            var disable_comment =  null ;
+
+            if (disable_comment)
+                  return;
+
+            disqus_button.style.display = "";
+
+            if (disqus_autoload){
+                  disqus();
+            }else{
+                  disqus_button.addEventListener("click", disqus, false);
+            }
+
+            function disqus() {
+
+                  if (!disqus_loaded) {
+                        disqus_loaded = true;
+
+                        var e = document.createElement("script");
+                        e.type = "text/javascript";
+                        e.async = true;
+                        e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                        (document.getElementsByTagName("head")[0] ||
+                              document.getElementsByTagName("body")[0])
+                        .appendChild(e);
+
+                        
+                        document.getElementById("show-comments").style.display = "none";
+                  }
+            }
+
+            
+            var hash = window.location.hash.substr(1);
+            if (hash.length > 8) {
+                  if (hash.substring(0, 8) == "comment-") {
+                        disqus();
+                  }
+            }
+
+            
+            if (/bot|google|baidu|bing|msn|duckduckgo|slurp|yandex/i.test(navigator.userAgent)) {
+                  disqus();
+            }
+      })();
+</script>
+
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6><font class="accent"> Copyright © 2021 - Bas van de Sande </font> |
+            <a href="https://blog.somethingAzure.com/">blog.somethingAzure.com</a></h6>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+
