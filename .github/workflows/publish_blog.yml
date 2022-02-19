@@ -27,6 +27,7 @@ jobs:
       - name: Build
         run: |
               hugo --minify
+              pwd
               ls -l -R
         # Do a HUGO build of your markdown files to generate a stetic website that is stored in the `./public` folder
 
