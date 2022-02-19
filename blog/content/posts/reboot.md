@@ -26,6 +26,6 @@ I looked at the templates available for [Hugo](https://gohugo.io/) and stumbled 
 Giving this blog much more the look of a glossy magazine.
 
 ## Broader content
-As I got rid of the old name "somethingAzure", I feel less constrained in the choice of posts I want to write. Inspired by all sorts of master classes, innovation days, side projects, lectures and technologies I already have some ideas of the articles I want to write. The Azure Coding Architect blog gives me a blanc canvas to write all sorts of conceptual, inspirational and techinal articles. 
+As I got rid of the old name "somethingAzure", I feel less constrained in the choice of posts I want to write. Inspired by all sorts of master classes, innovation days, side projects, lectures and technologies I already have some ideas of the articles I want to write. The Azure Coding Architect blog gives me a blanc canvas to write all sorts of conceptual, inspirational and techinal articles.   
 
 Happy times ahead!
