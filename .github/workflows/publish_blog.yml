@@ -1,0 +1,45 @@
+name: github pages # Name of the workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: blog
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+        # Downloads & installs HUGO cli
+
+      - name: Build
+        run: hugo --minify
+        # Do a HUGO build of your markdown files to generate a stetic website that is stored in the `./public` folder
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./blog/public
+        # takes the public folder and pushes the changes to a new branch called gh-pages
+          
+     # - uses: wangchucheng/algolia-uploader@master
+     #   with:
+     #     app_id: 9AWS4CUHVW
+     #     admin_key: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+     #     index_name: fullcycledeveloper-blog
+     #     index_file_path: ./blog/public/algolia.json
+     #   # Uploads the algolia json file to the index on algolia website
