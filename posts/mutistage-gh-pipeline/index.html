@@ -1,0 +1,283 @@
+<!doctype html><html class=no-js lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=siteBaseUrl content="https://blog.azurecodingarchitect.com/">
+<meta name=author content="Bas van de Sande">
+<meta name=description content="Tinkering with Azure and other technologies">
+<meta name=keywords content="blog,azure,cosmosdb,aks,kubernetes,k3s,docker,c#,visualstudio,architecture,technology,xpirit">
+<meta name=generator content="Hugo 0.92.2">
+<title>
+Multi-staged GitHub Pipeline | Azure Coding Architect
+</title>
+<meta name=description content="Multi-staged GitHub Pipeline - Tinkering with Azure and other technologies">
+<meta itemprop=name content="Multi-staged GitHub Pipeline">
+<meta itemprop=description content="Multi-staged GitHub Pipeline - Tinkering with Azure and other technologies">
+<meta property="og:title" content="Multi-staged GitHub Pipeline">
+<meta property="og:description" content="Multi-staged GitHub Pipeline - Tinkering with Azure and other technologies">
+<meta property="og:image" content="https://blog.azurecodingarchitect.com/multistage/ms-feature.png">
+<meta property="og:url" content="https://blog.azurecodingarchitect.com/posts/mutistage-gh-pipeline/">
+<meta property="og:site_name" content="Azure Coding Architect">
+<meta property="og:type" content="article">
+<script src=/modernizr-simple.js></script>
+<link href=/posts/mutistage-gh-pipeline/ rel=alternate type=application/rss+xml title="Azure Coding Architect">
+<link href=/posts/mutistage-gh-pipeline/ rel=feed type=application/rss+xml title="Azure Coding Architect">
+<link rel=canonical href=https://blog.azurecodingarchitect.com/posts/mutistage-gh-pipeline/>
+<link rel=stylesheet href=https://blog.azurecodingarchitect.com/theme.css>
+</head>
+<body class=bilberry-hugo-theme>
+<nav>
+<div class=container>
+<ul class=topnav>
+</ul>
+<div id=search-box class=search>
+<i class="fas fa-search"></i>
+<input id=search type=text placeholder="Search ...">
+</div>
+</div>
+</nav>
+<header>
+<div class=container>
+<div class=logo>
+<a href=/ class=logo>
+<img src=/bas.png alt>
+<span class=overlay><i class="fa fa-home"></i></span>
+</a>
+</div>
+<div class=titles>
+<h3 class=title>
+<a href=/>
+Azure Coding Architect
+</a>
+</h3>
+<span class=subtitle>Tinkering in the cloud...</span>
+</div>
+<div class=toggler>
+<i class="fa fa-bars" aria-hidden=true></i>
+</div>
+</div>
+</div>
+</header>
+<div class="main container">
+<div class="article-wrapper u-cf single">
+<a class=bubble href=https://blog.azurecodingarchitect.com/posts/mutistage-gh-pipeline/>
+<i class="fas fa-fw fa-pencil-alt"></i>
+</a>
+<article class="default article">
+<div class=featured-image>
+<a href=https://blog.azurecodingarchitect.com/posts/mutistage-gh-pipeline/>
+<img src=/multistage/ms-feature.png alt>
+</a>
+</div>
+<div class=content>
+<h1 class=article-title>
+<a href=https://blog.azurecodingarchitect.com/posts/mutistage-gh-pipeline/>
+Multi-staged GitHub Pipeline
+</a>
+</h1>
+<div class=meta>
+<span class="date moment">2021-09-11</span>
+<span class=readingTime>3 min read</span>
+<span class=categories>
+<a href=https://blog.azurecodingarchitect.com/categories/technical/>technical</a>
+</span>
+</div>
+<p>At the moment I&rsquo;m working on some infrastructure pipelines to build and deploy Azure infrastructure for one of our clients. For me a cool project as I&rsquo;m learning to work with technologies such as Bicep and GitHub actions. In this project we use GitHub actions for the CI/CD process. In this process every time a pull request is merged in the main branch, an automated build, test and deployment process is triggered.</p>
+<p><img src=/multistage/ms1.png alt=#multistage></p>
+<p>In this project we have three environments:</p>
+<ul>
+<li>test
+the deployment to this environment should be automatically after each build and merge into main.</li>
+<li>acceptance
+the deployment to this environment should only take place after an approval.</li>
+<li>production
+the deployment to this environment should only take place after an approval.</li>
+</ul>
+<p>Unfortunately, the stage approvals are only part of the enterprise license, and not of the paid team license we use. I was slightly disappointed and during last weekend I got this little idea&mldr;</p>
+<p><strong>How about simulating the approval process?</strong></p>
+<p>GitHub actions supports &ldquo;Inputs&rdquo;. Inputs are values that have to be set when triggering a workflow. In case a worklow is triggered automatically, the default values are being used. In case the workflow is triggered manually, the user is presented with a popup dialog in which the user has to fill in the values.</p>
+<p>This gives the user the option to deploy a build to other environments as well. In the example below, I have the option to either deploy to the acceptance and/or production environment; once the build and deploy to test succeeded.</p>
+<p><img src=/multistage/ms3.png alt=#multistage></p>
+<p>However In the flow presented above, you cannot deploy to production if you don&rsquo;t deploy to acceptance. To overcome this issue, the yaml needs to be altered, that the deployment for both the acceptance and deployment stage depend on a succeeding deployment in the test environment.</p>
+<p><img src=/multistage/ms2.png alt=#multistage></p>
+<p>To do this, the yaml script has to be setup like this:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml>
+<span style=color:#f92672>name</span>: <span style=color:#ae81ff>my multi staged hub infra deployment</span>
+
+<span style=color:#75715e># Set environment variables that are being used in the workflows</span>
+<span style=color:#f92672>env</span>:
+  <span style=color:#f92672>LOCATION</span>: <span style=color:#ae81ff>WestEurope</span>
+  <span style=color:#f92672>CLI_VERSION</span>: <span style=color:#ae81ff>2.21.0</span>
+
+<span style=color:#f92672>on</span>:
+  <span style=color:#f92672>push</span>:
+    <span style=color:#f92672>branches</span>: [ <span style=color:#ae81ff>master ]</span>
+    <span style=color:#f92672>paths</span>:
+    - <span style=color:#e6db74>&#39;Infra/Modules/**&#39;</span>
+    - <span style=color:#e6db74>&#39;Infra/Deployments/hub/**&#39;</span>
+    - <span style=color:#e6db74>&#39;.github/workflows/hub.yml&#39;</span>
+  <span style=color:#75715e># Allows you to run this workflow manually from the Actions tab</span>
+  <span style=color:#f92672>workflow_dispatch</span>:
+    <span style=color:#f92672>inputs</span>:
+      <span style=color:#f92672>acceptance</span>:
+        <span style=color:#f92672>description</span>: <span style=color:#e6db74>&#39;Deploy to Acceptance (yes/no)?&#39;</span>
+        <span style=color:#f92672>required</span>: <span style=color:#66d9ef>true</span>
+        <span style=color:#f92672>default</span>: <span style=color:#e6db74>&#39;no&#39;</span>
+      <span style=color:#f92672>production</span>:
+        <span style=color:#f92672>description</span>: <span style=color:#e6db74>&#39;Deploy to production (yes/no)?&#39;</span>
+        <span style=color:#f92672>required</span>: <span style=color:#66d9ef>true</span>
+        <span style=color:#f92672>default</span>: <span style=color:#e6db74>&#39;no&#39;</span>
+<span style=color:#f92672>jobs</span>:
+  <span style=color:#f92672>build-hub</span>:
+    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Build Hub</span>
+    <span style=color:#f92672>if</span>: <span style=color:#ae81ff>github.event_name == &#39;push&#39; || (github.event_name == &#39;pull_request&#39; &amp;&amp; github.event.action != &#39;closed&#39;) || github.event_name == &#39;repository_dispatch&#39; || github.event_name == &#39;workflow_dispatch&#39;</span>
+
+    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+    <span style=color:#f92672>steps</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checkout files</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v2</span>
+ 
+      <span style=color:#ae81ff>...</span>
+
+  <span style=color:#f92672>test-provision-hub</span>:
+    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>TEST - Provision Hub</span>
+    <span style=color:#f92672>needs</span>: <span style=color:#ae81ff>build-hub</span>
+    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+    <span style=color:#f92672>steps</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Download artifacts</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/download-artifact@v2</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drop</span>
+          <span style=color:#f92672>path</span>: <span style=color:#ae81ff>src</span>
+  
+     <span style=color:#ae81ff>...</span>
+
+  <span style=color:#f92672>acc-provision-hub</span>:
+    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ACC - Provision Hub </span>
+    <span style=color:#f92672>if</span>: <span style=color:#ae81ff>github.event.inputs.acceptance == &#39;yes&#39;</span>
+    <span style=color:#f92672>environment</span>: <span style=color:#ae81ff>acc  </span> <span style=color:#75715e># defined environment with protection rules added</span>
+    <span style=color:#f92672>needs</span>: <span style=color:#ae81ff>test-provision-hub</span>
+    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+    <span style=color:#f92672>steps</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Download artifacts</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/download-artifact@v2</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drop</span>
+          <span style=color:#f92672>path</span>: <span style=color:#ae81ff>src</span>
+  
+      <span style=color:#ae81ff>...</span>
+
+  <span style=color:#f92672>prod-provision-hub</span>:
+    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>PROD - Provision Hub </span>
+    <span style=color:#f92672>if</span>: <span style=color:#ae81ff>github.event.inputs.production == &#39;yes&#39;</span>
+    <span style=color:#f92672>environment</span>: <span style=color:#ae81ff>prod </span> <span style=color:#75715e># defined environment with protection rules added</span>
+    <span style=color:#f92672>needs</span>: <span style=color:#ae81ff>test-provision-hub</span>
+    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+    <span style=color:#f92672>steps</span>:
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Download artifacts</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/download-artifact@v2</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>drop</span>
+          <span style=color:#f92672>path</span>: <span style=color:#ae81ff>src</span>
+  
+      <span style=color:#ae81ff>...</span>
+
+</code></pre></div><p>For now this workaround will do fine, however I&rsquo;m not so happy with the omission of the multi stage approval in the GitHub Teams subscription. For that reason I contacted a GitHub representative and had a little chat with him. He told me that the focus within GitHub is the Enterprise edition. He advised me to contact GitHub support for this matter. I guess that is going to be my next step.</p>
+</div>
+<div class=footer>
+<div class=tags>
+<i class="fa fa-tags"></i>
+<div class=links>
+<a href=https://blog.azurecodingarchitect.com/tags/github/>github</a>
+<a href=https://blog.azurecodingarchitect.com/tags/workaround/>workaround</a>
+<a href=https://blog.azurecodingarchitect.com/tags/teams/>teams</a>
+</div>
+</div>
+</div>
+</article>
+</div>
+<div id=comments-container>
+<script src=https://giscus.app/client.js data-repo=basvandesande/azurecodingarchitect data-repo-id=R_kgDOG3nWLg data-category=General data-category-id=DIC_kwDOG3nWLs4CBPIU data-mapping=pathname data-reactions-enabled=1 data-emit-metadata data-theme=light data-lang=en crossorigin=anonymous async></script>
+<div id=giscus></div>
+</div>
+</div>
+<footer>
+<div class=container>
+<div class=recent-posts>
+<strong>Latest posts</strong>
+<ul>
+<li>
+<a href=https://blog.azurecodingarchitect.com/posts/reboot/>Sometimes you need to reboot...</a>
+</li>
+<li>
+<a href=https://blog.azurecodingarchitect.com/posts/mutistage-gh-pipeline/>Multi-staged GitHub Pipeline</a>
+</li>
+<li>
+<a href=https://blog.azurecodingarchitect.com/posts/certification-renewal/>Certification Renewal</a>
+</li>
+<li>
+<a href=https://blog.azurecodingarchitect.com/posts/devops-all-the-way/>DevOps All the Way</a>
+</li>
+<li>
+<a href=https://blog.azurecodingarchitect.com/posts/practice-what-you-preach/>Practice what you preach!</a>
+</li>
+<li>
+<a href=https://blog.azurecodingarchitect.com/posts/introduction/>Introduction</a>
+</li>
+</ul>
+</div>
+<div class=categories>
+<a href=/categories/><strong>Categories</strong></a>
+<ul>
+<li>
+<a href=/categories/general>General
+(3)</a>
+</li>
+<li>
+<a href=/categories/technology>Technology
+(2)</a>
+</li>
+<li>
+<a href=/categories/technical>Technical
+(1)</a>
+</li>
+</ul>
+</div>
+<div class=right>
+<div class=external-profiles>
+<strong>Social media</strong>
+<a href=https://twitter.com/basvandesande target=_blank><i class="fab fa-twitter"></i></a>
+<a href=https://linkdin/basvandesande target=_blank><i class="fab fa-linkedin"></i></a>
+<a href="mailto:bas@vd-sande.nl?subject=[AzureCodingArchitect]" target=_blank><i class="fa fa-envelope"></i></a>
+<a href=/index.xml target=_blank><i class="fas fa-rss"></i></a>
+</div>
+<div class=external-profiles>
+<strong>About me</strong>
+<a href=https://xpirit.com/team/bas-van-de-sande/ target=_blank><i class="fas fa-robot" &nbsp;></i></a>
+</div>
+</div>
+</div>
+</footer>
+<div class=credits>
+<div class=container>
+<div class=copyright>
+<a href=https://blog.azurecodingarchitect.com target=_blank>
+&copy;
+2022
+- Bas van de Sande - all rights reserved
+</div>
+<div class=author>
+<a href=https://github.com/Lednerb/bilberry-hugo-theme target=_blank>Bilberry Hugo theme</a>
+</div>
+</div>
+</div>
+<script type=text/javascript src=https://blog.azurecodingarchitect.com/theme.js></script>
+<div id=activate-algolia-search class=hidden>
+<input type=hidden id=algolia-search-appId value=4UZ1JSLB6X>
+<input type=hidden id=algolia-search-apiKey value=55fcc234122be7db44cdbf9cd02f4c6f>
+<input type=hidden id=algolia-search-indexName value=azurecodingarchitect-blog>
+<input type=hidden id=algolia-search-noSearchResults value="Nothing found.">
+<input type=hidden id=algolia-search-currentLanguageOnly>
+</div>
+</body>
+</html>
