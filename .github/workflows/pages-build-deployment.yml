@@ -45,5 +45,5 @@ jobs:
           app_id: 4UZ1JSLB6X
           admin_key: ${{ secrets.ALGOLIA_ADMIN_KEY }}
           index_name: azurecodingarchitect-blog
-          index_file_path: /blog/public/algolia.json
+          index_file_path: ./blog/public/algolia.json
         # Uploads the algolia json file to the index on algolia website
