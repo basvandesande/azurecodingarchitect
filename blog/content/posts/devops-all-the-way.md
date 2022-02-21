@@ -1,5 +1,8 @@
 +++
 title = "DevOps All the Way"
+subtitle = "DevOps makes the world go round"
+description = "Working in DevOps, means that your blog has to go DevOps all the way. In this article I describe how to setup an Azure DevOps CI/CD pipeline."
+author="Bas van de Sande"
 date = 2021-07-30T09:00:06+02:00
 featuredImage = "/devops/devops-feature.png"
 tags = ["devops", "hugo","pipeline"]

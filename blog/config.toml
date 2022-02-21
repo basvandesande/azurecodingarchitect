@@ -40,8 +40,8 @@ disqusShortname = ""
 
   # Enable / Disable algolia search
   algolia_search    = true
-  algolia_appId     = "4UZ1JSLB6X"
-  algolia_apiKey    = "55fcc234122be7db44cdbf9cd02f4c6f"
+  algolia_appId     = "0MFXRN8NPS"
+  algolia_apiKey    = "1f76a694ca8b94e89c10b7410bb74f88"
   algolia_indexName = "azurecodingarchitect-blog"
   # Set this option to false if you want to search within all articles in all languages at once
   algolia_currentLanguageOnly = true

@@ -1,5 +1,8 @@
 +++
 title = "Introduction"
+subtitle = "Hello world!"
+description = "First post. My nw blog around Microsoft Azure and related technologies. Introduce my self."
+author="Bas van de Sande"
 date = 2021-07-24T12:20:25+02:00
 featuredImage = "/intro/intro-feature.png"
 tags = ["Introduction", "doepicshit"]

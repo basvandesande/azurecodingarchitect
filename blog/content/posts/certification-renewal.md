@@ -1,5 +1,8 @@
 +++
 title = "Certification Renewal"
+subtitle = "How to renew your Azure Certificates"
+description = "For me it was not clear how to renew your Azure certifications until the email arrived I had to renew."
+author="Bas van de Sande"
 date = 2021-08-09T19:30:08+02:00
 featuredImage = "/cert/renew-feature.png"
 tags = ["azure","certification","learning"]

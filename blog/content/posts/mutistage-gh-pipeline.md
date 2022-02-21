@@ -1,5 +1,8 @@
 +++
 title = "Multi-staged GitHub Pipeline"
+subtitle = "Working with GitHub pipelines"
+description = "When working with GitHub pipelines I missed a feature that I needed. Approvals. This article describes a workaround in simpler plans."
+author="Bas van de Sande"
 date = 2021-09-11T19:46:30+02:00
 featuredImage = "/multistage/ms-feature.png"
 tags = ["github","workaround","teams"]
