@@ -1,14 +1,18 @@
-+++
-title = "DevOps All the Way"
-subtitle = "DevOps makes the world go round"
-description = "Working in DevOps, means that your blog has to go DevOps all the way. In this article I describe how to setup an Azure DevOps CI/CD pipeline."
-author="Bas van de Sande"
-date = 2021-07-30T09:00:06+02:00
-featuredImage = "/devops/devops-feature.png"
-tags = ["devops", "hugo","pipeline"]
-categories = ["technology"]
-draft =  false
-+++
+---
+title : "DevOps All the Way"
+subtitle : "DevOps makes the world go round"
+description : "Working in DevOps, means that your blog has to go DevOps all the way. In this article I describe how to setup an Azure DevOps CI/CD pipeline."
+author : "Bas van de Sande"
+date : 2021-07-30T09:00:06+02:00
+featuredImage : "/devops/devops-feature.png"
+tags : 
+  - devops
+  - hugo
+  - pipeline
+categories : 
+  - technology
+draft :  false
+---
 
 In [Practice what you preach]({{< ref "/posts/practice-what-you-preach" >}} "Practice what you Preach") I wrote that I decided to host my blog on the Azure platform, using Hugo as content management system, Blob Storage and Azure CDN for hosting the blog. The only thing lacking is a workflow of writing content, approving it and publishing it on the web. 
 

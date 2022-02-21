@@ -1,15 +1,17 @@
-+++
-title = "Introduction"
-subtitle = "Hello world!"
-description = "First post. My nw blog around Microsoft Azure and related technologies. Introduce my self."
-author="Bas van de Sande"
-date = 2021-07-24T12:20:25+02:00
-featuredImage = "/intro/intro-feature.png"
-tags = ["Introduction", "doepicshit"]
-categories = ["general"]
-draft = false
-
-+++
+---
+title :  "Introduction"
+subtitle :  "Hello world!"
+description :  "First post. My nw blog around Microsoft Azure and related technologies. Introduce my self."
+author: "Bas van de Sande"
+date :  2021-07-24T12:20:25+02:00
+featuredImage :  "/intro/intro-feature.png"
+tags :  
+    - Introduction 
+    - doepicshit
+categories : 
+    - general
+draft :  false
+---
 
 You have found my personal blog. This blog will be focused around Microsoft Azure technologies, hence the name "something Azure". Let me introduce myself, my name is Bas van de Sande and I work as an Azure Coding Architect at [**Xpirit**](https://www.xpirit.com) in the Netherlands.
 

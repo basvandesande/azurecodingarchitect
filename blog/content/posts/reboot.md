@@ -1,16 +1,16 @@
 ---
-title: "Sometimes you need to reboot..."
-subtitle = "Things don't always work out the way you want."
-description = "In this article I introduce my revamped blog, and I explain the idea behind the name change."
-author="Bas van de Sande"
-date: 2022-02-18T11:31:42+01:00
-featuredImage: "/reboot/reboot-feature.png"
-draft: false
-
-categories: ["general"]
-tags: ["Introduction","reboot"]
-toc: false
-
+title:  "Sometimes you need to reboot..."
+subtitle:  "Things don't always work out the way you want."
+description:  "In this article I introduce my revamped blog, and I explain the idea behind the name change."
+author:  "Bas van de Sande"
+date:  2022-02-18T11:31:42+01:00
+featuredImage:  "/reboot/reboot-feature.png"
+draft :  false
+categories: 
+    - general
+tags: 
+    - Introduction
+    - reboot
 ---
 
 Almost a year ago I created this blog... I mean not exactly this blog, but its predecessor "blog.somethingazure.com". 

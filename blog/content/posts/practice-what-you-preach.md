@@ -1,14 +1,18 @@
-+++
-title = "Practice what you preach!"
-subtitle = "Do what you say...."
-description = "In this aricle I'm going all in on Azure. I'm going to host my new blog in Azure!"
-author="Bas van de Sande"
-date = 2021-07-27T10:14:26+02:00
-featuredImage = "/practice/practice-feature.png"
-tags = ["azure","blog","technology"]
-categories = ["technology"]
-draft = false
-+++
+---
+title :  "Practice what you preach!"
+subtitle :  "Do what you say...."
+description :  "In this aricle I'm going all in on Azure. I'm going to host my new blog in Azure!"
+author: "Bas van de Sande"
+date :  2021-07-27T10:14:26+02:00
+featuredImage :  "/practice/practice-feature.png"
+tags :  
+    - azure
+    - blog
+    - technology
+categories :  
+    - technology
+draft :  false
+---
 When I decided to start blogging again, I knew I wanted to talk about the things I face, working with Azure.
 In the past I used to blog as well, back then I blogged on my Journey into CRM which I started in 2014. 
 

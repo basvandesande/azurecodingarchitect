@@ -1,14 +1,18 @@
-+++
-title = "Certification Renewal"
-subtitle = "How to renew your Azure Certificates"
-description = "For me it was not clear how to renew your Azure certifications until the email arrived I had to renew."
-author="Bas van de Sande"
-date = 2021-08-09T19:30:08+02:00
-featuredImage = "/cert/renew-feature.png"
-tags = ["azure","certification","learning"]
-categories = ["general"]
-draft = false
-+++
+---
+title : "Certification Renewal"
+subtitle : "How to renew your Azure Certificates"
+description : "For me it was not clear how to renew your Azure certifications until the email arrived I had to renew."
+author : "Bas van de Sande"
+date : 2021-08-09T19:30:08+02:00
+featuredImage : "/cert/renew-feature.png"
+tags :  
+    - azure
+    - certification
+    - learning
+categories : 
+    - general
+draft : false
+---
 When Microsoft introduced the new role based certifaction paths, a new expiration policy was set as well. After two years (as of july 2021, one year) the certification will expire, and you have to renew it in order to keep it.
 
 At the time, I was among the first people who passed the new certifications and back then the new expiration policy was unclear. There was no information on how to renew the certifications and costs involved, until a few weeks ago...

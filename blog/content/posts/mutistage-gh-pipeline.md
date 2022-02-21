@@ -1,14 +1,18 @@
-+++
-title = "Multi-staged GitHub Pipeline"
-subtitle = "Working with GitHub pipelines"
-description = "When working with GitHub pipelines I missed a feature that I needed. Approvals. This article describes a workaround in simpler plans."
-author="Bas van de Sande"
-date = 2021-09-11T19:46:30+02:00
-featuredImage = "/multistage/ms-feature.png"
-tags = ["github","workaround","teams"]
-categories = ["technical"]
-draft = false
-+++
+---
+title :  "Multi-staged GitHub Pipeline"
+subtitle :  "Working with GitHub pipelines"
+description :  "When working with GitHub pipelines I missed a feature that I needed. Approvals. This article describes a workaround in simpler plans."
+author: "Bas van de Sande"
+date :  2021-09-11T19:46:30+02:00
+featuredImage :  "/multistage/ms-feature.png"
+tags :  
+  - github
+  - workaround 
+  - teams
+categories :  
+  - technical
+draft :  false
+---
 
 At the moment I'm working on some infrastructure pipelines to build and deploy Azure infrastructure for one of our clients. For me a cool project as I'm learning to work with technologies such as Bicep and GitHub actions. In this project we use GitHub actions for the CI/CD process. In this process every time a pull request is merged in the main branch, an automated build, test and deployment process is triggered.
 
