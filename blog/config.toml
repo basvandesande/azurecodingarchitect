@@ -170,9 +170,9 @@ disqusShortname = ""
 
 # customize your available languages for your multi-lingual site
 # or delete the [Languages] blog to use the theme with only one supported language
-[Languages]
-  [Languages.en]
-    weight = 1
+#[Languages]
+#  [Languages.en]
+#    weight = 1
 #  [Languages.de]
 #    weight = 2
 #    title = "Mein cooler neuer Blog"
