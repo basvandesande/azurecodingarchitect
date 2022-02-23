@@ -1,7 +1,7 @@
 ---
 title: "Note to self: localhost in kestrel is localhost"
 subtitle :  "Problems accessing Kestrel website on remote host"
-description :  "Port binding under Kestrel does not alway work as expected."
+description :  "Port binding under Kestrel does not alway work as expected. You need to specify the IP Address as well..."
 author: "Bas van de Sande"
 date :  2022-02-23T17:20:25+02:00
 featuredImage :  "/kestrel/kestrel-feature.png"
@@ -12,7 +12,7 @@ tags:
     - debug
     - troubleshooting
 toc: false
-draft: true
+draft: false
 ---
 In one of the projects I'm involved in, I ran into a problem.  In this project we are building a solution that is running on a Linux based Edge Device connected to Azure. On the Edge device a [k3s](https://k3s.io/) cluster hosts a number of services required by the solution. In order to be able to develop and debug on a Linux environment, I equiped my system with Hyper-V, an internal NAT switch and a fresh copy of Ubuntu.
 
