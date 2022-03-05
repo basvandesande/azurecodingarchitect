@@ -6,11 +6,10 @@
 <meta name=author content="Bas van de Sande">
 <meta name=description content="Tinkering with Azure and other technologies">
 <meta name=keywords content="blog,azure,cosmosdb,aks,kubernetes,k3s,docker,c#,visualstudio,architecture,technology,xpirit">
-<meta name=generator content="Hugo 0.92.2">
+<meta name=generator content="Hugo 0.93.2">
 <title>
 DevOps All the Way | Azure Coding Architect
-</title>
-<meta name=description content="Working in DevOps, means that your blog has to go DevOps all the way. In this article I describe how to setup an Azure DevOps CI/CD pipeline.">
+</title><meta name=description content="Working in DevOps, means that your blog has to go DevOps all the way. In this article I describe how to setup an Azure DevOps CI/CD pipeline.">
 <meta itemprop=name content="DevOps All the Way">
 <meta itemprop=description content="Working in DevOps, means that your blog has to go DevOps all the way. In this article I describe how to setup an Azure DevOps CI/CD pipeline.">
 <meta property="og:title" content="DevOps All the Way">
@@ -24,37 +23,26 @@ DevOps All the Way | Azure Coding Architect
 <link href=/posts/devops-all-the-way/ rel=feed type=application/rss+xml title="Azure Coding Architect">
 <link rel=canonical href=https://azurecodingarchitect.com/posts/devops-all-the-way/>
 <link rel=stylesheet href=https://azurecodingarchitect.com/theme.css>
-</head>
-<body class=bilberry-hugo-theme>
+</head><body class=bilberry-hugo-theme>
 <nav>
 <div class=container>
 <ul class=topnav>
-</ul>
-</div>
-</nav>
-<header>
+</ul></div></nav><header>
 <div class=container>
 <div class=logo>
 <a href=/ class=logo>
 <img src=/bas.png alt>
 <span class=overlay><i class="fa fa-home"></i></span>
 </a>
-</div>
-<div class=titles>
+</div><div class=titles>
 <h3 class=title>
 <a href=/>
 Azure Coding Architect
 </a>
-</h3>
-<span class=subtitle>Tinkering in the cloud...</span>
-</div>
-<div class=toggler>
+</h3><span class=subtitle>Tinkering in the cloud...</span>
+</div><div class=toggler>
 <i class="fa fa-bars" aria-hidden=true></i>
-</div>
-</div>
-</div>
-</header>
-<div class="main container">
+</div></div></div></header><div class="main container">
 <div class="article-wrapper u-cf single">
 <a class=bubble href=https://azurecodingarchitect.com/posts/devops-all-the-way/>
 <i class="fas fa-fw fa-pencil-alt"></i>
@@ -64,14 +52,12 @@ Azure Coding Architect
 <a href=https://azurecodingarchitect.com/posts/devops-all-the-way/>
 <img src=/devops/devops-feature.png alt>
 </a>
-</div>
-<div class=content>
+</div><div class=content>
 <h1 class=article-title>
 <a href=https://azurecodingarchitect.com/posts/devops-all-the-way/>
 DevOps All the Way
 </a>
-</h1>
-<div class=meta>
+</h1><div class=meta>
 <span class="date moment">2021-07-30</span>
 <span class=readingTime>2 min read</span>
 <span class=categories>
@@ -80,175 +66,136 @@ DevOps All the Way
 <span class=author>
 <a href=https://azurecodingarchitect.com/author/bas-van-de-sande/>Bas van de Sande</a>
 </span>
-</div>
-<p>In <a href=https://azurecodingarchitect.com/posts/practice-what-you-preach/ title="Practice what you Preach">Practice what you preach</a> I wrote that I decided to host my blog on the Azure platform, using Hugo as content management system, Blob Storage and Azure CDN for hosting the blog. The only thing lacking is a workflow of writing content, approving it and publishing it on the web.</p>
-<p>As I work for a <a href=https://www.xpirit.com>company</a> that specialized on Azure and DevOps, I decided to take the plunge and go DevOps all the way. Doing some googling, I found out that there were some great tutorials out there to use an Azure DevOps CI/CD pipeline in combination with Hugo to compile and publish the blog. As a starter I followed this <a href=https://medium.com/@kurtmkurtm/setting-up-a-blog-with-the-hugo-framework-on-azure-blob-storage-12605609a90>writing</a> by kurtmkurtm.</p>
-<p>There was however one part of the instruction I wasn&rsquo;t happy with. In the description the author created a CI pipeline using a yaml pipeline, the CD release pipeline was setup by clicking it together. In a DevOps world you have to automate as much as possible to make it repeatable in an easy way (building, testing, deploying). Personally, I consider a CI/CD pipeline as a part of the code you write, thus it needs to be in code (and not in a hybrid fashion).</p>
-<p>What I did, was adding stages to the original pipeline. One stage for build and one stage for deployment.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e>#</span>
-<span style=color:#75715e># Azure pipeline to build and publishe a hugo blog release</span>
-<span style=color:#75715e># github.com/kurtmkurtm</span>
-<span style=color:#75715e># modified by Bas van de Sande</span>
-<span style=color:#75715e>#</span>
-
-<span style=color:#f92672>trigger</span>:
-- <span style=color:#ae81ff>main</span>
-
-<span style=color:#f92672>pool</span>:
-  <span style=color:#f92672>vmImage</span>: <span style=color:#e6db74>&#39;ubuntu-latest&#39;</span>
-
-<span style=color:#f92672>variables</span>:
-- <span style=color:#f92672>group</span>: <span style=color:#ae81ff>blogvars</span>
-   
-<span style=color:#f92672>stages</span>:
-- <span style=color:#f92672>stage</span>: <span style=color:#ae81ff>Generateblog</span>
-  <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Generate Blog</span>
-  <span style=color:#f92672>jobs</span>:
-  - <span style=color:#f92672>job</span>: 
-    <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Generate Blog</span>
-    <span style=color:#f92672>steps</span>:
-    - <span style=color:#f92672>script</span>: |<span style=color:#e6db74>
-</span><span style=color:#e6db74>        </span>        <span style=color:#ae81ff>wget -c https://github.com/gohugoio/hugo/releases/download/v$(hugo.version)/hugo_$(hugo.version)_Linux-64bit.deb   </span>
-      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Download HUGO&#39;</span>
-
-    - <span style=color:#f92672>script</span>: <span style=color:#e6db74>&#39;sudo dpkg -i hugo_$(hugo.version)_Linux-64bit.deb&#39;</span>
-      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Install HUGO&#39;</span>
-
-    - <span style=color:#f92672>script</span>: |<span style=color:#e6db74>
-</span><span style=color:#e6db74>        cd $(blog.path)
-</span><span style=color:#e6db74>        hugo  --log -v</span>        
-      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Generate Blog&#39;</span>
-
-    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>CopyFiles@2</span>
-      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Copy Blog&#39;</span>
-      <span style=color:#f92672>inputs</span>:
-        <span style=color:#f92672>SourceFolder</span>: <span style=color:#e6db74>&#39;$(blog.path)/public&#39;</span>
-        <span style=color:#f92672>Contents</span>: <span style=color:#e6db74>&#39;**&#39;</span>
-        <span style=color:#f92672>TargetFolder</span>: <span style=color:#e6db74>&#39;$(Build.ArtifactStagingDirectory)&#39;</span>
-
-    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>PublishBuildArtifacts@1</span>
-      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Publish Artifacts&#39;</span>
-      <span style=color:#f92672>inputs</span>:
-        <span style=color:#f92672>PathtoPublish</span>: <span style=color:#e6db74>&#39;$(Build.ArtifactStagingDirectory)&#39;</span>
-        <span style=color:#f92672>ArtifactName</span>: <span style=color:#e6db74>&#39;drop&#39;</span>
-        <span style=color:#f92672>publishLocation</span>: <span style=color:#e6db74>&#39;Container&#39;</span>
-
-- <span style=color:#f92672>stage</span>: <span style=color:#ae81ff>PubllishBlog</span>
-  <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Publish Blog</span>
-  <span style=color:#f92672>jobs</span>:
-  - <span style=color:#f92672>job</span>:
-    <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Publish Blog</span>
-    <span style=color:#f92672>steps</span>:
-    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>DownloadBuildArtifacts@0</span>
-      <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Download Artifacts</span>
-      <span style=color:#f92672>inputs</span>:
-        <span style=color:#f92672>buildType</span>: <span style=color:#e6db74>&#39;current&#39;</span>
-        <span style=color:#f92672>downloadType</span>: <span style=color:#e6db74>&#39;specific&#39;</span>
-        <span style=color:#f92672>itemPattern</span>: <span style=color:#e6db74>&#39;**&#39;</span>
-        <span style=color:#f92672>downloadPath</span>: <span style=color:#e6db74>&#39;$(System.ArtifactsDirectory)&#39;</span>
-    
-    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>AzureCLI@2</span>
-      <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Copy web to Blob storage</span>
-      <span style=color:#f92672>inputs</span>:
-        <span style=color:#f92672>azureSubscription</span>: <span style=color:#e6db74>&#39;$(azureSubscription)&#39;</span>
-        <span style=color:#f92672>scriptType</span>: <span style=color:#e6db74>&#39;bash&#39;</span>
-        <span style=color:#f92672>scriptLocation</span>: <span style=color:#e6db74>&#39;inlineScript&#39;</span>
-        <span style=color:#f92672>inlineScript</span>: <span style=color:#ae81ff>az storage blob upload-batch -d &#39;$web&#39; -s $(System.ArtifactsDirectory)/drop  --account-name $(storageAccountName) --account-key $(storageAccountKey)</span>
-</code></pre></div><p>In order to make the pipeline reusable, I took out all literals and placed them into variables. These variables are maintained in the Azure DevOps Library section below.</p>
-<p><img src=/devops/devops-all-the-way.png alt="Pipeline variables"></p>
-<p>Thus by implementing the automated build and deployment pipeline, every merge into the main branch results into an automated deployment. Mission accomplished!</p>
-<p><img src=/devops/buildsucceeded.png alt=#success></p>
-</div>
-<div class=footer>
+</div><p>In <a href=https://azurecodingarchitect.com/posts/practice-what-you-preach/ title="Practice what you Preach">Practice what you preach</a> I wrote that I decided to host my blog on the Azure platform, using Hugo as content management system, Blob Storage and Azure CDN for hosting the blog. The only thing lacking is a workflow of writing content, approving it and publishing it on the web.</p><p>As I work for a <a href=https://www.xpirit.com>company</a> that specialized on Azure and DevOps, I decided to take the plunge and go DevOps all the way. Doing some googling, I found out that there were some great tutorials out there to use an Azure DevOps CI/CD pipeline in combination with Hugo to compile and publish the blog. As a starter I followed this <a href=https://medium.com/@kurtmkurtm/setting-up-a-blog-with-the-hugo-framework-on-azure-blob-storage-12605609a90>writing</a> by kurtmkurtm.</p><p>There was however one part of the instruction I wasn&rsquo;t happy with. In the description the author created a CI pipeline using a yaml pipeline, the CD release pipeline was setup by clicking it together. In a DevOps world you have to automate as much as possible to make it repeatable in an easy way (building, testing, deploying). Personally, I consider a CI/CD pipeline as a part of the code you write, thus it needs to be in code (and not in a hybrid fashion).</p><p>What I did, was adding stages to the original pipeline. One stage for build and one stage for deployment.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e>#</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Azure pipeline to build and publishe a hugo blog release</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># github.com/kurtmkurtm</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># modified by Bas van de Sande</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>trigger</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>pool</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>vmImage</span>: <span style=color:#e6db74>&#39;ubuntu-latest&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>- <span style=color:#f92672>group</span>: <span style=color:#ae81ff>blogvars</span>
+</span></span><span style=display:flex><span>   
+</span></span><span style=display:flex><span><span style=color:#f92672>stages</span>:
+</span></span><span style=display:flex><span>- <span style=color:#f92672>stage</span>: <span style=color:#ae81ff>Generateblog</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Generate Blog</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>jobs</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>job</span>: 
+</span></span><span style=display:flex><span>    <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Generate Blog</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>steps</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>script</span>: |<span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        </span>        <span style=color:#ae81ff>wget -c https://github.com/gohugoio/hugo/releases/download/v$(hugo.version)/hugo_$(hugo.version)_Linux-64bit.deb   </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Download HUGO&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>script</span>: <span style=color:#e6db74>&#39;sudo dpkg -i hugo_$(hugo.version)_Linux-64bit.deb&#39;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Install HUGO&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>script</span>: |<span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        cd $(blog.path)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        hugo  --log -v</span>        
+</span></span><span style=display:flex><span>      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Generate Blog&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>CopyFiles@2</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Copy Blog&#39;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>inputs</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>SourceFolder</span>: <span style=color:#e6db74>&#39;$(blog.path)/public&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Contents</span>: <span style=color:#e6db74>&#39;**&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>TargetFolder</span>: <span style=color:#e6db74>&#39;$(Build.ArtifactStagingDirectory)&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>PublishBuildArtifacts@1</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>displayName</span>: <span style=color:#e6db74>&#39;Publish Artifacts&#39;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>inputs</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>PathtoPublish</span>: <span style=color:#e6db74>&#39;$(Build.ArtifactStagingDirectory)&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ArtifactName</span>: <span style=color:#e6db74>&#39;drop&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>publishLocation</span>: <span style=color:#e6db74>&#39;Container&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- <span style=color:#f92672>stage</span>: <span style=color:#ae81ff>PubllishBlog</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Publish Blog</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>jobs</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>job</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Publish Blog</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>steps</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>DownloadBuildArtifacts@0</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Download Artifacts</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>inputs</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>buildType</span>: <span style=color:#e6db74>&#39;current&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>downloadType</span>: <span style=color:#e6db74>&#39;specific&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>itemPattern</span>: <span style=color:#e6db74>&#39;**&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>downloadPath</span>: <span style=color:#e6db74>&#39;$(System.ArtifactsDirectory)&#39;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>task</span>: <span style=color:#ae81ff>AzureCLI@2</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>displayName</span>: <span style=color:#ae81ff>Copy web to Blob storage</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>inputs</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>azureSubscription</span>: <span style=color:#e6db74>&#39;$(azureSubscription)&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>scriptType</span>: <span style=color:#e6db74>&#39;bash&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>scriptLocation</span>: <span style=color:#e6db74>&#39;inlineScript&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>inlineScript</span>: <span style=color:#ae81ff>az storage blob upload-batch -d &#39;$web&#39; -s $(System.ArtifactsDirectory)/drop  --account-name $(storageAccountName) --account-key $(storageAccountKey)</span>
+</span></span></code></pre></div><p>In order to make the pipeline reusable, I took out all literals and placed them into variables. These variables are maintained in the Azure DevOps Library section below.</p><p><img src=/devops/devops-all-the-way.png alt="Pipeline variables"></p><p>Thus by implementing the automated build and deployment pipeline, every merge into the main branch results into an automated deployment. Mission accomplished!</p><p><img src=/devops/buildsucceeded.png alt=#success></p></div><div class=footer>
 <div class=tags>
 <i class="fa fa-tags"></i>
 <div class=links>
 <a href=https://azurecodingarchitect.com/tags/devops/>devops</a>
 <a href=https://azurecodingarchitect.com/tags/hugo/>hugo</a>
 <a href=https://azurecodingarchitect.com/tags/pipeline/>pipeline</a>
-</div>
-</div>
-</div>
-</article>
-</div>
-<div id=comments-container>
+</div></div></div></article></div><div id=comments-container>
 <script src=https://giscus.app/client.js data-repo=basvandesande/azurecodingarchitect data-repo-id=R_kgDOG3nWLg data-category=General data-category-id=DIC_kwDOG3nWLs4CBPIU data-mapping=pathname data-reactions-enabled=1 data-emit-metadata data-theme=light data-lang=en crossorigin=anonymous async></script>
-<div id=giscus></div>
-</div>
-</div>
-<footer>
+<div id=giscus></div></div></div><footer>
 <div class=container>
 <div class=recent-posts>
 <strong>Latest posts</strong>
 <ul>
 <li>
+<a href=https://azurecodingarchitect.com/posts/persistent-sql-docker/>Running a persistent SQL Server in Docker</a>
+</li><li>
 <a href=https://azurecodingarchitect.com/posts/localhost_in_kestrel/>Note to self: localhost in kestrel is localhost</a>
-</li>
-<li>
+</li><li>
 <a href=https://azurecodingarchitect.com/posts/reboot/>Sometimes you need to reboot...</a>
-</li>
-<li>
+</li><li>
 <a href=https://azurecodingarchitect.com/posts/mutistage-gh-pipeline/>Multi-staged GitHub Pipeline</a>
-</li>
-<li>
+</li><li>
 <a href=https://azurecodingarchitect.com/posts/certification-renewal/>Certification Renewal</a>
-</li>
-<li>
+</li><li>
 <a href=https://azurecodingarchitect.com/posts/devops-all-the-way/>DevOps All the Way</a>
-</li>
-<li>
+</li><li>
 <a href=https://azurecodingarchitect.com/posts/practice-what-you-preach/>Practice what you preach!</a>
-</li>
-<li>
-<a href=https://azurecodingarchitect.com/posts/introduction/>Introduction</a>
-</li>
-</ul>
-</div>
-<div class=categories>
+</li></ul></div><div class=categories>
 <a href=/categories/><strong>Categories</strong></a>
 <ul>
 <li>
 <a href=/categories/general>General
 (3)</a>
-</li>
-<li>
+</li><li>
 <a href=/categories/technical>Technical
 (2)</a>
-</li>
-<li>
+</li><li>
 <a href=/categories/technology>Technology
 (2)</a>
-</li>
-</ul>
-</div>
-<div class=right>
+</li><li>
+<a href=/categories/development>Development
+(1)</a>
+</li></ul></div><div class=right>
 <div class=external-profiles>
 <strong>Social media</strong>
 <a href=https://twitter.com/basvandesande target=_blank><i class="fab fa-twitter"></i></a>
 <a href=https://linkdin/basvandesande target=_blank><i class="fab fa-linkedin"></i></a>
 <a href="mailto:bas@vd-sande.nl?subject=[AzureCodingArchitect]" target=_blank><i class="fa fa-envelope"></i></a>
 <a href=/index.xml target=_blank><i class="fas fa-rss"></i></a>
-</div>
-<div class=external-profiles>
+</div><div class=external-profiles>
 <strong>About me</strong>
 <a href=https://xpirit.com/team/bas-van-de-sande/ target=_blank><i class="fas fa-robot" &nbsp;></i></a>
-</div>
-</div>
-</div>
-</footer>
-<div class=credits>
+</div></div></div></footer><div class=credits>
 <div class=container>
 <div class=copyright>
 <a href=https://azurecodingarchitect.com target=_blank>
 &copy;
 2022
 - Bas van de Sande - all rights reserved
-</div>
-<div class=author>
+</div><div class=author>
 <a href=https://github.com/Lednerb/bilberry-hugo-theme target=_blank>Bilberry Hugo theme</a>
-</div>
-</div>
-</div>
-<script type=text/javascript src=https://azurecodingarchitect.com/theme.js></script>
-</body>
-</html>
+</div></div></div><script type=text/javascript src=https://azurecodingarchitect.com/theme.js></script>
+</body></html>
