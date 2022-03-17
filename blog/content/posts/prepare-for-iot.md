@@ -14,7 +14,7 @@ categories :
 draft: false
 ---
 My interest for the Internet of Things (IoT) was sparked many moons ago, way before the name was born. Back in the days I wrote software for PalmOS devices, and I was intrigued by having raw processor power in my Pocket. Don't get me wrong, back then we where talking Megahertz instead of Gigahertz and Kilobyte instead of Gigabyte. Having such limitations in processing power and memory tickled my creativity. 
-When I had the opportunity to control hardware (gps, electronic locks etc) using the little devices I was sold.  Fastforward to a couple of years ago when the market was flooded with Arduinos and Raspberry Pis, I picked up an old hobby and started developing again, this time playing around with sensors. The big disadvantage was that you had to resort to plain old C and a crippled development environment.   
+When I had the opportunity to control hardware (gps, electronic locks etc) using the little devices I was sold.  Fastforward to a couple of years ago when the market was flooded with Arduinos and Raspberry Pis, I picked up an old hobby and started developing again, this time playing around with sensors. The big disadvantage was that you had to resort to plain old C and a crippled development environment, until now...   
 
 At the last innovation day at [Xpirit](https://xpirit.com), I teamed with a group of like-minded collegues and tinkered a day with a solution around Azure IoT. A collegue and I tried to flash an ESP8266 board to run the [.Net NanoFramework](https://nanoframework.net/): The NanoFramework is a slimmed down version of the .Net Framework, targeted to run on an ESP32 device. 
 
@@ -91,7 +91,7 @@ When Visual Studio is restarted, you have 3 new project types which are targetti
 ![NanoFramework project types](/prepareiot/iot-newprojecttypes.png)
 
 Before I can deploy the application to the ESP32 device, I need to add the Device Explorer. 
-- Go to View --> Other Windows -? Device Explorer
+- Go to View --> Other Windows --> Device Explorer
 
 ![Add Device Explorer](/prepareiot/iot-setdevice1.png)
 
@@ -100,7 +100,7 @@ In the Device Explorer I select my device that appears and press the "Ping" butt
 ![Ping success](/prepareiot/iot-setdevice2.png)
 
 ## Ensure correct version of mscorlib
-Before deploying the software to the device, it is important that the mscorlib is compatible with the firmware on the ESP32 device. Go to the NuGet package manager and update it to a matching version. In my was was this the latest preview version (as I specified the --preview for the flash operation in nanoff). If the versions are not compatible an error message will appear in the output pane indicating that the versions have to match [troubleshooting](https://docs.nanoframework.net/content/getting-started-guides/trouble-shooting-guide.html#when-you-attempt-to-debug-you-get-a-deployment-error-and-you-see-a-message-couldnt-find-a-valid-assembly-required-by-mscorlib-in-the-output-windownet-nanoframework-extension) 
+Before deploying the software to the device, it is important that the mscorlib is compatible with the firmware on the ESP32 device. Go to the NuGet package manager and update it to a matching version. In my was was this the latest preview version (as I specified the --preview for the flash operation in nanoff). If the versions are not compatible an error message will appear in the output pane indicating that the versions have to match ([troubleshooting](https://docs.nanoframework.net/content/getting-started-guides/trouble-shooting-guide.html#when-you-attempt-to-debug-you-get-a-deployment-error-and-you-see-a-message-couldnt-find-a-valid-assembly-required-by-mscorlib-in-the-output-windownet-nanoframework-extension)) 
 
 ![mscorlib](/prepareiot/iot-mscorlib.png)
 
