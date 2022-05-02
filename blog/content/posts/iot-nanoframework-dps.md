@@ -16,13 +16,13 @@ categories :
 draft: false
 ---
 
-In my [previous post](/posts/prepare-for-iot/) I flashed my ESP32 with the nanoframework.net, allowing me to write C# code in Visual Studio with all bells and whistles. As life goes... the device landed in my drawer until this week where I had some time to experiment. This time I wanted to hook up the device to Azure IoT hub using the Device Provisiong Service (DPS) which brings me one step closer to my goal, performing device updates over-the-air...    
+In my [previous post](/posts/prepare-for-iot/) I flashed my ESP32 with the nanoframework.net, allowing me to write C# code in Visual Studio with all bells and whistles. As life goes... the device landed in my drawer until this week where I had some time to experiment. This time I wanted to hook up the device to Azure IoT hub using the Device Provisioning Service (DPS) which brings me one step closer to my goal, performing device updates over-the-air...    
 
 To get started I set up a new Azure IoT hub on the free tier. The F1 tier is basically the same as the Standard S1 tier, except for the number of messages allowed per day. For development and testing purposes this will do. The tier can be set in the management tab when creating the IoT hub.   
 
 ![Azure IoT Hub](/dps/dps-newiothub.png)
 
-Once the IoT hub was setup, the next step was to setup the Device Provisiong Service. For me the advantage of using this additional service is that I have a central place that I can use to manage my devices. For now it seems like it is overkill, but imagine that you have to commission a large number of devices. Devices with a pre-installed code base but with a destinctive configuration file (containing a device id and a device key). 
+Once the IoT hub was setup, the next step was to setup the Device Provisioning Service. For me the advantage of using this additional service is that I have a central place that I can use to manage my devices. For now it seems like it is overkill, but imagine that you have to commission a large number of devices. Devices with a pre-installed code base but with a destinctive configuration file (containing a device id and a device key). 
 
 Using the DPS for device enrollments allows us to rapidly register a large number of devices with a minimal amount of work. While in the other case, registering the devices on the IoT hub itself would be a painstaking process.
 
