@@ -17,7 +17,7 @@ draft :  false
 Techorama is a conference that has long been on my list of conferences to attend, but for some reason I never went. Looking back I think I had this idea that world class conferences could only be held in the US (or in a place far-far away from home) with thousands of visitors. I was dead wrong. 
 What the organizers understood perfectly is that in order to have a world class conference, you should offer the same smooth, convenient and rich experience with the very best speakers, but then at a smaller scale. 
 
-When reading the agenda I didn't know where to start, over 100 sessions in 2 days in 8 parallel tracks with a opening and closing keynote by Richard Campbell ([.NET Rocks!](https://www.dotnetrocks.com/)), in which he shared a very personal story about the deamons he faught as a kid and how is he coping with it today. Very inspirational.
+When reading the agenda I didn't know where to start, over 100 sessions in 2 days in 11 parallel tracks with a opening keynote by [Derek Martin](https://twitter.com/thebookofdoodle), in which he shared a very personal story about the deamons he faught as a kid and how is he coping with it today. Very inspirational.
 
 What struck me when studying the list of sessions, was that a number of sessions had nothing to do with technology; instead these sessions focussed on the most important person in the world a.k.a. yourself! I decided that on the second day I would attend a number of those non technical sessions. Who knows what it would bring me... 
 
@@ -60,6 +60,9 @@ Plain simply put... the technical sessions I attended were awesome:
     - Deep dive, this is as close to the source and the architecture you will get.
 - Adam Furmanek: 
     - How Amazon is dealing with bringing order in the chaos to get correct log sequences among microservices running in different time zones.
+- Richard Campbell:
+    - Software development in the next decade.
+    - expectations, global directions and trends.
 
 - etc...
 
