@@ -10,7 +10,7 @@ tags :
   - workaround 
   - teams
 categories :  
-  - technical
+  - technology
 draft :  false
 ---
 
