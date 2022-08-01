@@ -28,7 +28,7 @@ As far as my knowledge reaches when it comes to the ESP32 board, flashed with th
 
 ![memory layout](/ota/ota-memory.png)
 
-When I do an update of the executing binary and this fails, the device might end up in an unusable state. As long as I have access to the device this won't be much of a problem. In the case the device is not accessible it is. In order to overcome this problem, I need a solid main program that is responsible for;
+When I do an update of the executing binary and this fails, the device might end up in an unusable state. As long as I have access to the device this won't be much of a problem. In the case the device is not accessible it is. In order to overcome this problem, I need a solid main program (which does not need to be updated) that is responsible for;
 - the Wifi connection, 
 - the connection to Azure (disputable),
 - handling of software updates,
