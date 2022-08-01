@@ -88,7 +88,8 @@ public class FirmwareData
 ```
 
 ## Download binaries and replace if needed
-Once the list of FirmwareData object has been returned, it is time to download the binaries from Azure. The compatibility, version and name checking will eventually be done from the assembly that is retrieved from the blob storage. The idea is to load a byte stream, convert that to an assembly and from there on check if the assembly implements a specific interface. 
+Once the list of FirmwareData object has been returned, it is time to download the binaries from Azure. The compatibility, version and name checking will eventually be done from the assembly that is retrieved from the blob storage. 
+The idea is to load a byte stream, convert that to an assembly and from there on check if the assembly implements a specific interface. 
 
 The code below shows how to download a byte array from Azure Blob Storage. In this example I allowed public read permissions on the storage container. In order for the device to download the data from Blob Storage using an HttpClient, the connection to the DeviceClient has to be closed.
 
@@ -126,7 +127,7 @@ public class Azure
 }
 ```
 
-Once the bytestream has been downloaded (Azure.DownloadFirmwareBytes()), an Assembly is created using the bytes. The next step is to check if the assembly contains the desired interface implementation (IsSupportedAssembly). If the assembly contains the correct interface, a check is done to see if any plug-in stored on the device needs to be replaces (UpdateModuleCollection()). In case an existing plug-in needs to be replaced, the downloaded bytes are written to the internal persistent storage memory.
+Once the bytestream has been downloaded (Azure.DownloadFirmwareBytes()), an Assembly is created using the bytes. The next step is to check if the assembly contains the desired interface implementation (IsSupportedAssembly). If the assembly contains the correct interface, a check is done to see if any plug-in stored on the device needs to be replaced (UpdateModuleCollection()). In case an existing plug-in needs to be replaced, the downloaded bytes are written to the internal persistent storage memory.
 
 ``` C#
 class Program
@@ -246,10 +247,10 @@ class Program
 
 ```
 
-Where we use old skool reflection in the example above, the actual Execute method of the plug-in is invoked the same way.
+Where we use oldskool reflection in the example above, the actual Execute() method of the plug-in is invoked the same way.
 The debug output of Visual Studio below shows that we loaded the plug-in:
 
- "Assembly: NF_Plugin_Blinky (1.0.0.0)   (240 RAM - 812 ROM - 312 METADATA)", 
+ "Assembly: NF_Plugin_Blinky (1.0.0.0)   (240 RAM - 812 ROM - 312 METADATA)" 
  
  and that we executed all implemented methods of the interface implemented on it.
 
@@ -320,13 +321,13 @@ Handling module NF_AzureIot.Plugin_blinky v10
 ```
 
 ## Final thoughts
-The techniques shown in this post are the basis for an Over-The-Air update mechanism, in which you have a fixed binary that will act as a host to run one or multiple plug-ins that are stored on the device. In the host, you have to check periodically if there are newer versions of the plug-in available after which you can download, store and execute it. The code shown is not feature complete it is a proof of concept, e.g. error handling is lacking and MD-5 checking of the downloaded file is omitted.
+Techniques shown in this post are the basis for an Over-The-Air update mechanism in which you have a fixed binary that will act as a host to run one or multiple plug-ins that are stored on the device. In the host, you have to check periodically if there are newer versions of the plug-in available after which you can download, store and execute it. The code shown is not feature complete it is a proof of concept, e.g. error handling is lacking and MD-5 checking of the downloaded file is omitted.
 
 I'm impressed by the work done by the Nano framework project. Reflection on such a limited device... mind blowing!  Using the Visual Studio debugger on an embedded device is insanely powerful.
 
 Exceptions thrown by the Nanoframework can be pretty vague. What I learned in this implementation is that I need reference all Nuget packages in the host, that are being used in the plug-in  (e.g. System.Device.GPIO). Otherwise an exception will occur when reflection is used on the plug-in to determine if it is the correct type. This makes the Over the Air update somehow limited, as we cannot upgrade to a newer version of the Nano framework.
 
-I Ran many times into an issue with Visual Studio locking output binaries when recompiling the code, forcing me to restart Visual Studio. Sometimes Visual Studio crashes when stepping through code.
+Many times I ran into an issue with Visual Studio locking output binaries when recompiling the code, forcing me to restart Visual Studio. Sometimes Visual Studio crashes when stepping through code. Sometimes you have to erase the device because code that worked before throws an exception. 
 
 ![Visual Studio recovered](/ota/ota-unstable.png)
 
