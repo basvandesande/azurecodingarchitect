@@ -10,13 +10,16 @@ tags :
     - nanoframework
     - IoT
     - azure
+    - architecture
+    - opinion
 categories : 
     - development
 draft: false
 ---
 
 Developing solutions for IoT devices can be a challenging task, this can also apply for getting a device at its final destination in order to do its job. 
-When time passes by, it is likely that either requirements or conditions are changing and that the device is not capable anymore of doing its job. In other words, it needs to be updated. This is where the real problems may start. In many cases devices are not physically accessible or there are simply too many devices in the field to do manual updates. This is where over-the-air (OTA) updates will save your day. 
+When time passes by, it is likely that either requirements or conditions are changing and that the device is not capable anymore of doing its job. In other words, it needs to be updated. 
+This is where the real problems may start. In many cases devices are not physically accessible or there are simply too many devices in the field to do manual updates. This is where over-the-air (OTA) updates will save your day. 
 
 In this article I describe the fundamentals for an update mechanism that can be implemented using the Nano framework. 
 
@@ -25,13 +28,19 @@ As far as my knowledge reaches when it comes to the ESP32 board, flashed with th
 
 ![memory layout](/ota/ota-memory.png)
 
-When I do an update of the executing binary and this fails, the device might end up in an unusable state. As long as I have access to the device this won't be much of a problem. In the case the device is not accessible it is. Therefor I decided to resort to a mechanism I used in the past which is based upon a plug-in based architecture. 
+When I do an update of the executing binary and this fails, the device might end up in an unusable state. As long as I have access to the device this won't be much of a problem. In the case the device is not accessible it is. In order to overcome this problem, I need a solid main program that is responsible for;
+- the Wifi connection, 
+- the connection to Azure (disputable),
+- handling of software updates,
+- and finally the execution of the desired functionality. 
 
-The idea behind a C# plug-in architecture is as follows: 
+In other words,  I need to resort to a mechanism I used in the past which is basically a plug-in based architecture.  In a plug-in based architecture, the main program is nothing more than an execution platform that handles a number of system tasks. Based on a round-robin mechanism the detected plug-ins are executed.
+
+To implement a plug-in based architecture using the Nano framework, I need to do the following: 
 - Define an interface which is known by the host.
 - Implement this interface on a DLL that will be loaded dynamically.
 - Use reflection on the host to load DLLs from a certain folder.
-- if the DLL contains the specific interface, create an instance of the DLL and invoke the desired methods.
+- In case the DLL contains the specific interface, create an instance of the DLL and invoke the desired methods.
 
 In the blog post [Register ESP32 to DPS & IoT hub - IoT with C#](https://azurecodingarchitect.com/posts/iot-nanoframework-dps/) I described how to connect the ESP32 device to the Azure IoT hub. Now that the details of the connection have been worked out, it is time for the tricky part.
 
@@ -88,10 +97,10 @@ public class FirmwareData
 ```
 
 ## Download binaries and replace if needed
-Once the list of FirmwareData object has been returned, it is time to download the binaries from Azure. The compatibility, version and name checking will eventually be done from the assembly that is retrieved from the blob storage. 
-The idea is to load a byte stream, convert that to an assembly and from there on check if the assembly implements a specific interface. 
+Once the list of FirmwareData objects has been returned, it is time to download the binaries from Azure. The compatibility, version and name checking will eventually be done from the assembly that is retrieved from the blob storage. 
+The idea is to load a byte stream, then convert it to an assembly and from there on, check if the assembly implements a specific interface. 
 
-The code below shows how to download a byte array from Azure Blob Storage. In this example I allowed public read permissions on the storage container. In order for the device to download the data from Blob Storage using an HttpClient, the connection to the DeviceClient has to be closed.
+The code below shows how to download a byte array from Azure Blob Storage. In this example I allowed public read permissions on the storage container. In order for the device to download the data from Blob Storage using an HttpClient, the connection to the DeviceClient has to be closed (otherwise no connection can be made).
 
 ``` C#
 public class Azure
@@ -127,7 +136,7 @@ public class Azure
 }
 ```
 
-Once the bytestream has been downloaded (Azure.DownloadFirmwareBytes()), an Assembly is created using the bytes. The next step is to check if the assembly contains the desired interface implementation (IsSupportedAssembly). If the assembly contains the correct interface, a check is done to see if any plug-in stored on the device needs to be replaced (UpdateModuleCollection()). In case an existing plug-in needs to be replaced, the downloaded bytes are written to the internal persistent storage memory.
+Once the bytestream has been downloaded (Azure.DownloadFirmwareBytes()), an Assembly is created using the bytes. The next step is to check if the assembly contains the desired interface implementation (IsSupportedAssembly()). If the assembly contains the correct interface, a check is done to see if any plug-in stored on the device needs to be replaced (UpdateModuleCollection()). In case an existing plug-in needs to be replaced, the downloaded bytes are written to the internal persistent storage memory.
 
 ``` C#
 class Program
@@ -321,7 +330,7 @@ Handling module NF_AzureIot.Plugin_blinky v10
 ```
 
 ## Final thoughts
-Techniques shown in this post are the basis for an Over-The-Air update mechanism in which you have a fixed binary that will act as a host to run one or multiple plug-ins that are stored on the device. In the host, you have to check periodically if there are newer versions of the plug-in available after which you can download, store and execute it. The code shown is not feature complete it is a proof of concept, e.g. error handling is lacking and MD-5 checking of the downloaded file is omitted.
+Techniques shown in this post are the basis for an Over-The-Air update mechanism in which you have a fixed binary that will act as a host to run one or multiple plug-ins that are stored on the device. In the host, you have to check periodically if there are newer versions of the plug-in available after which you can download, store and execute it. The code shown is not feature complete it is a proof of concept, e.g. error handling is lacking, MD-5 checking of the downloaded file is omitted and no attempt is made to optimize the way the invoked classes are kept into memory. Optimizing the main program can be the topic for a next blog post.
 
 I'm impressed by the work done by the Nano framework project. Reflection on such a limited device... mind blowing!  Using the Visual Studio debugger on an embedded device is insanely powerful.
 
@@ -331,7 +340,7 @@ Many times I ran into an issue with Visual Studio locking output binaries when r
 
 ![Visual Studio recovered](/ota/ota-unstable.png)
 
-Would I use the Nano framework for mission critical workloads? Not as this point, the functionality and stability are improving very rapidly. For now I would resort to plain Arduino C and libraries available for that (or take a look at the Raspberry Nano board, running an embedded Python version), but my opinion might change in the near future.
+Would I use the Nano framework for mission critical workloads? Not as this point, however the functionality and stability are improving very rapidly. For now I would resort to plain Arduino C and libraries available for it (or be a bit more adventurous and take a plunge with the Raspberry Pico board, running an embedded Python version), but my opinion might change in the near future.
 
 For plain fun and nerdy hacking, this is a serious case of **#DoEpicShit** 
 
