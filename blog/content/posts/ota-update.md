@@ -15,7 +15,8 @@ categories :
 draft: false
 ---
 
-Developing solutions for IoT devices can be a challenging task, this also applies for getting the devices at their final destination in order to do its job. When time passes by, it is likely that either requirements or conditions are changing and that the device is not capable anymore of doind its job. In other words, it needs to be updated. This is where the real problems may start. In many cases devices are not physically accessible or there are simply too many devices in the field to do manual updates. This is where over-the-air (OTA) updates will save your day. 
+Developing solutions for IoT devices can be a challenging task, this can also apply for getting a device at its final destination in order to do its job. 
+When time passes by, it is likely that either requirements or conditions are changing and that the device is not capable anymore of doing its job. In other words, it needs to be updated. This is where the real problems may start. In many cases devices are not physically accessible or there are simply too many devices in the field to do manual updates. This is where over-the-air (OTA) updates will save your day. 
 
 In this article I describe the fundamentals for an update mechanism that can be implemented using the Nano framework. 
 
