@@ -20,7 +20,7 @@ Until that moment that I was confronted with my own bluff. The moment that I rea
 
 ![#obsolete](/certification/certification-obsolete.png)
 
-Fortunatly for me, I was exposed by some of the brightest minds in the industry during a job interview. One of them gave me the invaluable advice: "If you study for 30 minutes per day, you would be amazed of what you will achieve in six months time".
+Fortunately for me, I was exposed by some of the brightest minds in the industry during a job interview. One of them gave me the invaluable advice: "If you study for 30 minutes per day, you would be amazed of what you will achieve in six months time".
 
 This advice was the kick in the b*tt that I needed to develop a new mindset. Developing a new mindset is not easy. First of all you have to let go of your ego, by admitting that you have been slacking for too long. To acknowledge that one of THE most important assets of an IT professional is knowledge. As with most assets, maintenance is required to keep it in good shape. 
 
