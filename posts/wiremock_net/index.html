@@ -1,0 +1,176 @@
+<!doctype html><html class=no-js lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=siteBaseUrl content="https://azurecodingarchitect.com/"><meta name=author content="Bas van de Sande"><meta name=description content="Tinkering with Azure and other technologies"><meta name=keywords content="blog,azure,cosmosdb,aks,kubernetes,k3s,docker,c#,visualstudio,architecture,technology,xpirit"><meta name=generator content="Hugo 0.104.3"><title>Real world mocking! Http Service testing in C# using Wiremock.Net | Azure Coding Architect</title><meta name=description content="Real world testing for Http Services in C#"><meta itemprop=name content="Real world mocking! Http Service testing in C# using Wiremock.Net"><meta itemprop=description content="Real world testing for Http Services in C#"><meta property="og:title" content="Real world mocking! Http Service testing in C# using Wiremock.Net"><meta property="og:description" content="Real world testing for Http Services in C#"><meta property="og:image" content="https://azurecodingarchitect.com/wiremock/wiremock-feature.png"><meta property="og:url" content="https://azurecodingarchitect.com/posts/wiremock_net/"><meta property="og:site_name" content="Azure Coding Architect"><meta property="og:type" content="article"><script src=/modernizr-simple.js></script>
+<link href=/posts/wiremock_net/ rel=alternate type=application/rss+xml title="Azure Coding Architect"><link href=/posts/wiremock_net/ rel=feed type=application/rss+xml title="Azure Coding Architect"><link rel=canonical href=https://azurecodingarchitect.com/posts/wiremock_net/><link rel=stylesheet href=https://azurecodingarchitect.com/theme.css></head><body class=bilberry-hugo-theme><nav><div class=container><ul class=topnav><li><a href=https://xpirit.com/team/bas-van-de-sande/ target=_blank>About Me</a></li><li><a href=https://www.credly.com/users/bas-van-de-sande/badges target=_blank>Certifications</a></li></ul></div></nav><header><div class=container><div class=logo><a href=/ class=logo><img src=/bas.png alt>
+<span class=overlay><i class="fa fa-home"></i></span></a></div><div class=titles><h3 class=title><a href=/>Azure Coding Architect</a></h3><span class=subtitle>Tinkering in the cloud...</span></div><div class=toggler><i class="fa fa-bars" aria-hidden=true></i></div></div></div></header><div class="main container"><div class="article-wrapper u-cf single"><a class=bubble href=https://azurecodingarchitect.com/posts/wiremock_net/><i class="fas fa-fw fa-pencil-alt"></i></a><article class="default article"><div class=featured-image><a href=https://azurecodingarchitect.com/posts/wiremock_net/><img src=/wiremock/wiremock-feature.png alt></a></div><div class=content><h1 class=article-title><a href=https://azurecodingarchitect.com/posts/wiremock_net/>Real world mocking! Http Service testing in C# using Wiremock.Net</a></h1><div class=meta><span class="date moment">2022-10-28</span>
+<span class=readingTime>8 min read</span>
+<span class=categories><a href=https://azurecodingarchitect.com/categories/development/>development</a></span>
+<span class=author><a href=https://azurecodingarchitect.com/author/bas-van-de-sande/>Bas van de Sande</a></span></div><p>At Xpirit we have a culture of never ending learning. One of the best ways of learning new things, is by doing it. To take the plunge and do the deep dive.</p><p>In this case my colleague <a href=https://xpirit.com/team/kristofr/>Kristoff Riebels</a> learned me some new tricks by introducing me into the world of WireMock.Net. Together we wrote a magazine article for <a href=https://xpirit.com/download/xprt-magazine-n-13/>Xpirit Magazine #13</a>.</p><p>In this blog post I want to share this article with you. The magazine can be downloaded from the link above.</p><h2 id=introduction>Introduction</h2><p>Writing tests is hard by itself, and often it is forgotten that there is a need for different kinds of tests. There are unit tests that cover specific functionality and are scoped clearly. There are system tests that cover many functionalities but replace the external systems with fake ones. There are also Integration tests - which are like system tests - but this time external systems are involved in the test process.</p><p>Maintaining Integration tests is hard as there are a lot of dependencies not necessarily under your control. Furthermore, it is not easy to incorporate the integration tests into the CI-pipeline.
+Each type of test has its own difficulties. In this article the tests that are going to be discussed are system and integration tests. WireMock.Net is going to play an important role in converting the hard to maintain integration tests into controllable system tests and vice versa.</p><h2 id=what-is-wiremocknet>What is WireMock.Net?</h2><p><a href=https://github.com/WireMock-Net/WireMock.Net>WireMock.Net</a> is a GitHub community project and contains the C# implementation of mock4net which mimics functionality from the JAVA based WireMock.org.
+The idea behind WireMock.Net is to mimic the behaviour of a real-life HTTP API. HTTP requests, that are made from the code that is tested, are captured and sent to a WireMock.Net HTTP server (which is part of the testing framework) and as a result an HTTP response is returned that can be verified against an expected behaviour.</p><h2 id=which-features-are-offered-by-wiremocknet>Which features are offered by WireMock.Net?</h2><p>One of the most interesting features of WireMock.Net is it can be used in Test projects. It can record and playback captured messages. In integration tests WireMock.Net can be set up to act as a proxy in order to capture and/or forward the HTTP requests. WireMock.Net can also be configured to give the matching response when it sees similar requests. This means integration tests can be turned into system tests and vice versa. Of course, assertions can be written for those incoming requests.</p><p>In case the requests are too dynamic, request matching is the technique used to generalize incoming requests. Requests can be matched by URL, path, request method, request header, cookies and/or request body.
+WireMock.Net can also be used when manual testing is needed but when the dependencies are not ready or are unavailable on the testing environment. It can be run as a standalone tool.</p><h2 id=hello-world>Hello world!</h2><p>With the understanding of what WireMock.Net is all about, let’s see how it can be set up using XUnit.
+The example below describes a simple test method that sets up a wiremock.net server. It defines a request and a response. When a Get-request with path “/foo” is sent to the WireMock-server, a response will be created with status code OK and with content “bar”.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>GivenAWireMockServer</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#a6e22e>    [Fact]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>    [Trait(&#34;Category&#34;,&#34;SystemTests&#34;)]</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task WhenSendingAGetRequestTo_foo_ReceiveAResponse_bar()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//Arrange</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> wireMockServer = WireMock.Server.WireMockServer.Start();
+</span></span><span style=display:flex><span>        wireMockServer.Given(Request.Create()
+</span></span><span style=display:flex><span>            .UsingGet()
+</span></span><span style=display:flex><span>            .WithPath(<span style=color:#e6db74>&#34;/hello&#34;</span>)
+</span></span><span style=display:flex><span>        ).RespondWith(Response.Create()
+</span></span><span style=display:flex><span>            .WithStatusCode(HttpStatusCode.OK)
+</span></span><span style=display:flex><span>            .WithBody(<span style=color:#e6db74>&#34;world&#34;</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> httpClient = wireMockServer.CreateClient();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//Act</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> barResponse = <span style=color:#66d9ef>await</span> httpClient.GetAsync(<span style=color:#e6db74>&#34;hello&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> body = <span style=color:#66d9ef>await</span> barResponse.Content.ReadAsStringAsync();
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//Assert</span>
+</span></span><span style=display:flex><span>        Assert.Equal(HttpStatusCode.OK, barResponse.StatusCode);
+</span></span><span style=display:flex><span>        Assert.Equal(<span style=color:#e6db74>&#34;world&#34;</span>, body);
+</span></span><span style=display:flex><span>   }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Of course, the scenario above is to show the simplicity of setting up a test. Let`s see how it can be used as an integration test.
+Test scenario
+The following code represents a WeatherForecastController with a Get method. Browsing to http://localhost:3011/weatherforecast results in one of the following messages: “Too hot”, “Cozy”, “Cold” or “Too cold”.</p><p>The method consumes a weather forecasting service <a href=https://api.open-meteo.com/v1/forecast>https://api.open-meteo.com/v1/forecast</a>. In order to consume the service, the WeatherForecastController is dependent on the IOpenMeteoClient which depends on the IHttpClientFactory.</p><p>The httpClientFactory creates an HttpClient that will get the forecast from the weather forecasting service. Based on the result, the method in the WeatherForecastController returns one of the messages defined above. The OpenMeteoClient is actually a proxy that helps to hide the fact an HttpClientFactory is used.</p><p>Define the first integration test
+Before an integration test can be defined, it needs to know what messages and responses go back and forth over the line. Fiddler can be used to intercept the traffic from the WeatherForecastController to the open-meteo API.</p><p>The actual request and response look like the following:</p><p><strong>request</strong></p><pre tabindex=0><code>GET https://api.open-meteo.com/v1/forecast?latitude=51.09&amp;longitude=4.06&amp;daily=temperature_2m_max,temperature_2m_min&amp;current_weather=true&amp;timezone=Europe%2FBerlin&amp;start_date=2022-07-31&amp;end_date=2022-07-31 HTTP/1.1
+Host: api.open-meteo.com
+traceparent: 00-1e25de5aeaa91dba70b47f8679ea7dc9-d74d7ed281f40bdb-00
+</code></pre><p><strong>response</strong></p><pre tabindex=0><code>HTTP/1.1 200 OK
+Date: Sun, 31 Jul 2022 15:13:41 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+
+{“latitude”:53.1,”longitude”:5.06,”generationtime_ms”:0.38301944732666016,”utc_offset_seconds”:7200,”elevation”:3.0,”current_weather”:{“temperature”:22.5,”windspeed”:22.8,”winddirection”:249.0,”weathercode”:3.0,”time”:”2022-07-31T17:00”},”daily_units”:{“time”:”iso8601”,”temperature_2m_max”:”°C”,”temperature_2m_min”:”°C”},”daily”:{“time”:[“2022-07-31”],”temperature_2m_max”:[23.6],”temperature_2m_min”:[17.0]}}
+</code></pre><p>When using WireMock.Net to do the integration test, a mocked IhttpClientFactory is set up to return the HttpClient of the embedded WireMock.Net Server. The WireMock.Net Server runs in the same process but it is reachable from the “outside” as well.</p><p>A basic integration test of the Get method on the WeatherForecastController from the test scenario, can look like this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#a6e22e>[Fact]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>[Trait(“Category”,”IntegrationTests”)]</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task WhenRequestingCurrentWeatherInformation_DateShouldBeUtcToday()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Arrange</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> application = <span style=color:#66d9ef>new</span> WebApplicationFactory&lt;Program&gt;()
+</span></span><span style=display:flex><span>        .WithWebHostBuilder(builder =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            builder.ConfigureServices(
+</span></span><span style=display:flex><span>                services =&gt; services.AddConfiguredServices());
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Act</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> httpClient = application.CreateClient();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Assert</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> response = <span style=color:#66d9ef>await</span> httpClient.GetAsync(<span style=color:#960050;background-color:#1e0010>“</span>/WeatherForecast<span style=color:#960050;background-color:#1e0010>”</span>);
+</span></span><span style=display:flex><span>    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> weather = <span style=color:#66d9ef>await</span> response.Content.ReadFromJsonAsync&lt;WeatherForecast&gt;();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>This integration test tests if a filled WeatherForecast response was returned from the API and if the date of the weather forecast matches with the local system date.</p><h2 id=integration-test-using-the-request-matcher>Integration test: using the Request Matcher</h2><p>The code below shows setting up the request matcher and defining the corresponding response. The matching is set up to be fairly generic but can be set up as strictly as desired.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task WhenRequestingCurrentWeatherInformation_DateShouldBeUtcToday()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Arrange</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> openMeteoWireMockServer = WireMock.Server.WireMockServer.Start();
+</span></span><span style=display:flex><span>    openMeteoWireMockServer.Given(Request.Create()
+</span></span><span style=display:flex><span>        .UsingGet()
+</span></span><span style=display:flex><span>        .WithPath(path =&gt; path.Contains(<span style=color:#e6db74>&#34;forecast&#34;</span>))
+</span></span><span style=display:flex><span>    ).RespondWith(Response.Create()
+</span></span><span style=display:flex><span>        .WithStatusCode(HttpStatusCode.OK)
+</span></span><span style=display:flex><span>.WithBody(...<span style=color:#e6db74>&#34;current_weather\&#34;:{\&#34;temperature\&#34;:22.5,\&#34;windspeed\&#34;:22.8,\&#34;winddirection\&#34;:249.0,\&#34;weathercode\&#34;:3.0,\&#34;time\&#34;:\&#34;2022-07-31T17:00&#34;</span>...));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> openMeteoHttpClient = openMeteoWireMockServer.CreateClient();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> fakeHttpClientFactory = <span style=color:#66d9ef>new</span> Fake&lt;IHttpClientFactory&gt;( );
+</span></span><span style=display:flex><span>    fakeHttpClientFactory.CallsTo(httpClientFactory =&gt; httpClientFactory.CreateClient(<span style=color:#960050;background-color:#1e0010>“</span>OpenMeteo<span style=color:#960050;background-color:#1e0010>”</span>))
+</span></span><span style=display:flex><span>        .Returns(openMeteoHttpClient);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> application = <span style=color:#66d9ef>new</span> WebApplicationFactory&lt;Program&gt;()
+</span></span><span style=display:flex><span>        .WithWebHostBuilder(builder =&gt;
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            builder.ConfigureServices(
+</span></span><span style=display:flex><span>                services =&gt;
+</span></span><span style=display:flex><span>                {
+</span></span><span style=display:flex><span>                    services.AddConfiguredServices();
+</span></span><span style=display:flex><span>                    services.AddScoped(provider =&gt; fakeHttpClientFactory.FakedObject);
+</span></span><span style=display:flex><span>                });
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Act</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> httpClient = application.CreateClient();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//Assert</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> response = <span style=color:#66d9ef>await</span> httpClient.GetAsync(<span style=color:#e6db74>&#34;/WeatherForecast&#34;</span>);
+</span></span><span style=display:flex><span>    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> weather = <span style=color:#66d9ef>await</span> response.Content.ReadFromJsonAsync&lt;WeatherForecast&gt;();
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>} 
+</span></span></code></pre></div><p>Open Fiddler, execute the test and notice there is a call from the WeatherForcastController to the open-meteo API. Instead of accessing the original host at the Url “https://api.open-meteo.com/v1/forecast?lattitude=51&mldr;” , the host being called is the WireMock.Net server, running at localhost listening to port 49894. The Url contains the part “forecast” and that will result in a Http status code 200, with the Http body that was defined in the test.</p><h2 id=integration-test-working-with-recorded-messages>Integration test: working with recorded messages</h2><p>A new test is set up using recorded messages. In this scenario WireMock.Net will play these messages back if the matching request comes in. Fiddler is used as a proxy server to monitor what is happening.
+In order to prepare the test to work with recorded messages, the response messages need to be captured initially. The code below shows how to record the messages. The recorded messages are stored in the local debug folder.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#75715e>//Arrange</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> openMeteoWireMockServer = WireMock.Server.WireMockServer.Start(
+</span></span><span style=display:flex><span><span style=color:#66d9ef>new</span> WireMockServerSettings()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    ProxyAndRecordSettings = <span style=color:#66d9ef>new</span> ProxyAndRecordSettings()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        Url = <span style=color:#e6db74>&#34;https://api.open-meteo.com&#34;</span>,
+</span></span><span style=display:flex><span>        SaveMapping = <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>        SaveMappingToFile = <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>        WebProxySettings = <span style=color:#66d9ef>new</span> WebProxySettings()
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Address = <span style=color:#e6db74>&#34;127.0.0.1:8888&#34;</span>
+</span></span><span style=display:flex><span>        },
+</span></span><span style=display:flex><span>        ExcludedHeaders = <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>string</span>[]{<span style=color:#e6db74>&#34;Host&#34;</span>, <span style=color:#e6db74>&#34;traceparent&#34;</span> }
+</span></span><span style=display:flex><span>     },
+</span></span><span style=display:flex><span>         StartAdminInterface = <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>         FileSystemHandler = <span style=color:#66d9ef>new</span> LocalFileSystemHandler(<span style=color:#e6db74>&#34;.&#34;</span>)
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> openMeteoHttpClient = openMeteoWireMockServer.CreateClient(); 
+</span></span></code></pre></div><p>Open Fiddler and execute the test. Notice there is an actual call forwarded to the open-meteo API.</p><p>The mappings are recorded in the project’s debug folder as shown below.</p><p>Once the initial recording is done, the playback mechanism can be used as shown in the example below. For more advanced use cases, the mapping model can be opened, split or organized. In the example below WireMock.Net will handle the mapping model the way it was recorded.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#75715e>//Arrange</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> openMeteoWireMockServer = WireMock.Server.WireMockServer.Start(
+</span></span><span style=display:flex><span><span style=color:#66d9ef>new</span> WireMockServerSettings()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    ReadStaticMappings = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//Act</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> openMeteoHttpClient = openMeteoWireMockServer.CreateClient(); 
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//Assert</span>
+</span></span><span style=display:flex><span>...
+</span></span></code></pre></div><h2 id=using-wiremocknet-in-a-ci-pipeline>Using WireMock.Net in a CI pipeline</h2><p>WireMock.Net can be used for automated testing in GitHub actions workflows as well. In the pipeline example below a simple GitHub actions workflow is setup that will restore, build and test the code. The following YAML is an example.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>name</span>: <span style=color:#ae81ff>.NET</span>
+</span></span><span style=display:flex><span>	<span style=color:#f92672>on</span>:
+</span></span><span style=display:flex><span>	  <span style=color:#f92672>push</span>:
+</span></span><span style=display:flex><span>	    <span style=color:#f92672>branches</span>: [ <span style=color:#e6db74>&#34;main&#34;</span> ]
+</span></span><span style=display:flex><span>	  <span style=color:#f92672>pull_request</span>:
+</span></span><span style=display:flex><span>	    <span style=color:#f92672>branches</span>: [ <span style=color:#e6db74>&#34;main&#34;</span> ]
+</span></span><span style=display:flex><span>	<span style=color:#f92672>jobs</span>:
+</span></span><span style=display:flex><span>	  <span style=color:#f92672>build</span>:
+</span></span><span style=display:flex><span>	    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+</span></span><span style=display:flex><span>	    <span style=color:#f92672>steps</span>:
+</span></span><span style=display:flex><span>	    - <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v3</span>
+</span></span><span style=display:flex><span>	    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Setup .NET</span>
+</span></span><span style=display:flex><span>	      <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/setup-dotnet@v2</span>
+</span></span><span style=display:flex><span>	      <span style=color:#f92672>with</span>:
+</span></span><span style=display:flex><span>	        <span style=color:#f92672>dotnet-version</span>: <span style=color:#ae81ff>6.0</span><span style=color:#ae81ff>.x</span>
+</span></span><span style=display:flex><span>	    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Restore dependencies</span>
+</span></span><span style=display:flex><span>	      <span style=color:#f92672>run</span>: <span style=color:#ae81ff>dotnet restore ./src/WiremockSamples.sln</span>
+</span></span><span style=display:flex><span>	    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Build</span>
+</span></span><span style=display:flex><span>	      <span style=color:#f92672>run</span>: <span style=color:#ae81ff>dotnet build ./src/WiremockSamples.sln --no-restore</span>
+</span></span><span style=display:flex><span>	    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Test</span>
+</span></span><span style=display:flex><span>	      <span style=color:#f92672>run</span>: <span style=color:#ae81ff>dotnet test ./src/WiremockSamples.sln --no-build --verbosity normal --filter &#34;Category=SystemTests&#34; </span>
+</span></span></code></pre></div><p>The tests have the attribute Trait with key “Category” and value “IntegrationTests” or “SystemTests”. When running all tests, the pipeline will fail because the IntegrationTests are actually trying to contact the actual open-meteo API. This API cannot be reached from the the CI server. In order to overcome this, a filter is applied to ensure that only “SystemTests” are executed.</p><p>Let’s see what happens if the pipeline has been executed. The pipeline results show that the system test ran successfully.</p><h2 id=summary>Summary</h2><p>This article just scratches the surface when it comes to testing with WinMock.Net. There is much more to discover with WireMock.Net, but the above will help to setup integration and system tests in any .NET project using Http based services.</p><p>The <a href=https://github.com/WireMock-Net/WireMock.Net/wiki>WireMock.Net Wiki</a> pages at GitHub are self-explanatory. The repository contains many samples covering the most common scenarios. The ease of use to test Http based services with real requests and responses makes it worthwhile to revaluate existing unit tests. Instead of mocking entire functions just the internal Http requests and responses can be mocked, giving an additional level of control in the software testing process. The sources in this article are <a href=https://github.com/kriebb/Wiremock.net>shared on GitHub</a> as well.</p></div><div class=footer><div class=tags><i class="fa fa-tags"></i><div class=links><a href=https://azurecodingarchitect.com/tags/c#/>C#</a>
+<a href=https://azurecodingarchitect.com/tags/integration-testing/>integration testing</a>
+<a href=https://azurecodingarchitect.com/tags/magazine/>magazine</a></div></div></div></article></div><div id=comments-container><script src=https://giscus.app/client.js data-repo=basvandesande/azurecodingarchitect data-repo-id=R_kgDOG3nWLg data-category=General data-category-id=DIC_kwDOG3nWLs4CBPIU data-mapping=pathname data-reactions-enabled=1 data-emit-metadata data-theme=light data-lang=en crossorigin=anonymous async></script><div id=giscus></div></div></div><footer><div class=container><div class=recent-posts><strong>Latest posts</strong><ul><li><a href=https://azurecodingarchitect.com/posts/wiremock_net/>Real world mocking! Http Service testing in C# using Wiremock.Net</a></li><li><a href=https://azurecodingarchitect.com/posts/certification/>Just do it! Work on your certifications.</a></li><li><a href=https://azurecodingarchitect.com/posts/ota-update/>Over-The-Air device update - IoT with C#</a></li><li><a href=https://azurecodingarchitect.com/posts/techorama/>Techorama Antwerp 2022, human connection</a></li><li><a href=https://azurecodingarchitect.com/posts/iot-nanoframework-dps/>Register ESP32 to DPS & IoT hub - IoT with C#</a></li><li><a href=https://azurecodingarchitect.com/posts/prepare-for-iot/>From 0 to 100 in 30 minutes - IoT with C#</a></li><li><a href=https://azurecodingarchitect.com/posts/persistent-sql-docker/>Running a persistent SQL Server in Docker</a></li></ul></div><div class=categories><a href=/categories/><strong>Categories</strong></a><ul><li><a href=/categories/development>Development
+(5)</a></li><li><a href=/categories/general>General
+(5)</a></li><li><a href=/categories/technology>Technology
+(3)</a></li><li><a href=/categories/technical>Technical
+(1)</a></li></ul></div><div class=right><div class=external-profiles><strong>Social media</strong>
+<a href=https://twitter.com/basvandesande target=_blank><i class="fab fa-twitter"></i></a>
+<a href=https://linkdin/basvandesande target=_blank><i class="fab fa-linkedin"></i></a>
+<a href="mailto:bas@vd-sande.nl?subject=[AzureCodingArchitect]" target=_blank><i class="fa fa-envelope"></i></a>
+<a href=/index.xml target=_blank><i class="fas fa-rss"></i></a></div><div class=external-profiles><strong>About me</strong>
+<a href=https://xpirit.com/team/bas-van-de-sande/ target=_blank><i class="fas fa-robot" &nbsp;></i></a></div></div></div></footer><div class=credits><div class=container><div class=copyright><a href=https://azurecodingarchitect.com target=_blank>&copy;
+2022
+- Bas van de Sande - all rights reserved</div><div class=author><a href=https://github.com/Lednerb/bilberry-hugo-theme target=_blank>Bilberry Hugo theme</a></div></div></div><script type=text/javascript src=https://azurecodingarchitect.com/theme.js></script></body></html>
