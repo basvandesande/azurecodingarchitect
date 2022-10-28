@@ -17,7 +17,7 @@ draft: false
 
 At Xpirit we have a culture of never ending learning. One of the best ways of learning new things, is by doing it. To take the plunge and do the deep dive. 
 
-In this case my colleague [Kristoff Riebels](https://xpirit.com/team/kristofr/) learned me some new tricks by introducing me into the world of WireMock.Net. Together we wrote a magazine article for [Xpirit Magazine #13](https://xpirit.com/download/xprt-magazine-n-13/). 
+In this case my colleague [Kristoff Riebbels](https://xpirit.com/team/kristofr/) learned me some new tricks by introducing me into the world of WireMock.Net. Together we wrote a magazine article for [Xpirit Magazine #13](https://xpirit.com/download/xprt-magazine-n-13/). 
 
 In this blog post I want to share this article with you. The magazine can be downloaded from the link above.     
 
