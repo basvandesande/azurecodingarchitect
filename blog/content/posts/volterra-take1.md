@@ -23,9 +23,9 @@ At our last Innovation Day in november, I picked up the idea to get some hands o
 ### What is this Volterra Windows Dev Kit thingie?
 The Windows Dev Kit 2023 is a very small ARM based computer in the shape of a Mac Mini, albeit the Microsoft version is a bad ass black colored eco friendly machine; using recycled materials for its casing. 
 
-The heart of the machine is an octocore Qualcomm Snapdragon 8cx processor combined with 32GB of DDR4 RAM, a very snappy 512GB ssd and all modern ports and connectivy options that you could wish for. All this goodness comes with a price tag of $599. On top of it, the machine is equiped with a 7 core GPU and a special NPU (neural processor unit) which can be used after obtaining the required drivers from Qualcomm. 
+The heart of the machine is an octocore Qualcomm Snapdragon 8cx processor combined with 32GB of DDR4 RAM, a very snappy 512GB ssd and all modern ports and connectivity options that you could wish for. All this goodness comes with a price tag of $599. On top of it, the machine is equiped with a 7 core GPU and a special NPU (neural processor unit) which can be used after obtaining the required drivers from Qualcomm. 
 
-Out of the box it runs Windows 11 for ARM64 and you can download special ARM64 based versions of tools like Visual Studio 2022 for it. Unlike some of the other ARM based Windows machines on the market, this one feels really snappy and runs alomst anything you can throw at it.
+Out of the box it runs Windows 11 for ARM64 and you can download special ARM64 based versions of tools like Visual Studio 2022 for it. Unlike some of the other ARM based Windows machines on the market, this one feels really snappy and runs almost anything you can throw at it.
 
 ![Doom in 100% C#](/volterra1/volterra-doom.jpg)
 During the Innovation Day, my colleague [Wesley Cabus](https://xpirit.com/team/wesley-cabus/) took his [doom-sharp](https://github.com/wcabus/doom-sharp) project that he built from scratch using C# .NET 6. We expected that it would take some time to get the game running on the hardware architecture of the Dev Kit, but in fact after a couple of minutes, he was blasting through the first level of the game. **Impressive** 
@@ -34,7 +34,7 @@ During the rest of the day we experimented with Kubernetes and managed to edit a
 
 ![Desktop](/volterra1/volterra-desktop.jpg)
 
-So far we only experimented with normal use cases. A couple of weeks later my daughter talked to me about a project that she was working at university (Data Science Msc). She told me that she was using Google compute services to train an AI model, because her computer took forever to process through 120 epochs (in Machine Learning an epoch is a complete training dataset) containing over 30GB in images which had to be processed over and over. 
+So far we only experimented with normal use cases. A couple of weeks later my daughter talked to me about a project that she was working on at university (Data Science Msc). She told me that she was using Google compute services to train an AI model, because her computer took forever to process through 120 epochs (in Machine Learning an epoch is when all the training data is used at once and is defined as the total number of iterations of all the training data in one cycle for training the machine learning model) containing over 30GB in images which had to be processed over and over. 
 
 I told her thaţ at the office we had these Windows Developer kits and that I would take one home to see if we could run the workload on an energy friendly edge device (10 Watts under full load).
 
