@@ -16,7 +16,7 @@ tags:
 toc: false
 draft: false
 ---
-At [Xpirit](https://xpirit.com) we have multiple times per year an [Innovation Day](https://youtu.be/5-RDUK7dXvg). The idea of an Innovation Day is to work on technologies or topics that spark your interest. Anything is allowed, as long as it has nothing to do with any customer assignments. Learning and knowledge sharing is the goal of such a day. 
+At [Xpirit](https://xpirit.com) we have an [Innovation Day](https://youtu.be/5-RDUK7dXvg) multiple times per year. The idea of an Innovation Day is to work on technologies or topics that spark your interest. Anything is allowed, as long as it has nothing to do with any customer assignments. Learning and knowledge sharing is the goal of such a day. 
 
 At our last Innovation Day in november, I picked up the idea to get some hands on experience with the Windows Dev Kit 2023 also known as Project Volterra. Technology minded as we are, we purchased two of these boxes at the office for experimentation (big shout out to @marcelv).
 
