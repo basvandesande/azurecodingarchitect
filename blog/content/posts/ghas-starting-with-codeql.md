@@ -13,7 +13,7 @@ tags :
     - Code scanning
 categories : 
     - general
-draft :  true
+draft :  false
 ---
 
 Over the last two years, I have seen a growing awareness when it comes to zero trust computing. When organizations look at zero trust computing, the first thing that comes into mind is getting the infrastructure secure. Assuming breach, ensuring that there are multiple layers of security applied. As an engineer I love seeing this growing awareness. What a lot of organizations seem to forget is that perhaps the most important part of securing its data starts with analyzing the source code of its proprietary software.
