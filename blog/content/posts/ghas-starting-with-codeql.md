@@ -68,14 +68,14 @@ In top of the file there is a comment header. This comment header is essential a
 
 The **import csharp** statement describes what programming language is going to be analyzed. In the background specific libraries are present which are used to do the analysis. GitHub provides a detailed description of the [C# CodeQL Library](https://codeql.github.com/docs/codeql-language-guides/codeql-library-for-csharp/).  
 
-In the example above, my source code will be analyzed for the presence of Block statements (**from BlockStmt blk**), e.g. _if_ statements. For each statement that is present in the source code the **where blk.isEmpty()**  will check if there is any code within the statement. If there is no code present, then the **elect blk, "This 'if' statement is redundant."** will select the empty statement. 
+In the example above, my source code will be analyzed for the presence of Block statements (**from BlockStmt blk**), e.g. _if_ statements. For each statement that is present in the source code the "**where blk.isEmpty()**"  will check if there is any code within the statement. If there is no code present, then the **select blk, "This 'if' statement is redundant."** will select the empty statement. 
 
 The "This 'if' statement is redundant." description will be shown as a friendly description to indicate why this piece of code was marked as a potential problem.
 
 ## Pack the query 
 If we want to use the query in our CodeQL workflow, we need to do one additional thing which is "packing" it. Packing means that the custom queries are being compiled to a binary form that can be executed by the CodeQL engine. The compilation can be done upfront or dynamically during the execution of the workflow. 
 
-In this blog, I'll follow the path of the dynamic compilation which means that I have to provide some meta data for the compiler. The meta data is provided in a file called **qlpack.yml** that has to be present in folder of the custom queries that I provide (in a single folder multiple query files can be provided).  
+In this blog, I'll follow the path of the dynamic compilation which means that I have to provide some meta data for the compiler. The meta data is provided in a file called **qlpack.yml** that has to be present in folder of the custom queries that I provide (note that in a single folder multiple query files can be provided).  
 
 ![Folder structure](/ghas/ghas-qlpack.png)
 
@@ -103,9 +103,9 @@ Scroll down to **line 53** and modify this line as follows:
 
   `queries: +security-and-quality, ./.github/codeql/custom-queries`
 
-The line has turned into a comma seperated line containing multiple library packs.  The "security-and-quality" is the default library GitHub provides. By adding the PLUS (+) in front of it, the presence of thius library is ensured. 
+The line has turned into a comma seperated line containing multiple library packs.  The "security-and-quality" is the default library GitHub provides. By adding the PLUS (+) in front of it, the presence of this library is ensured. 
 
-The second library is the relative path to the folder in which my queries are stored. GitHub Code scanning is pretty picky about the relative folder structure. This costed my a lot of time bacause existing examples didn't use a local relative path but referred to an external repository instead.
+The second library is the relative path to the folder in which my queries are stored. GitHub Code scanning is pretty picky about the relative folder structure. This costed my a lot of time because existing examples didn't use a local relative path but referred to an external repository instead.
 
 The CodeQL.yml file should look like this after changing the line:
 
