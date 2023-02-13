@@ -149,7 +149,7 @@ disqusShortname = ""
     # brand icons https://fontawesome.com/icons?d=gallery&s=brands&m=free
     socialMediaLinks = [
       { link = "https://twitter.com/basvandesande", icon = "fab fa-twitter" },
-      { link = "https://linkdin/basvandesande", icon = "fab fa-linkedin" },
+      { link = "https://linkd.in/basvandesande", icon = "fab fa-linkedin" },
       { link = "mailto:bas@vd-sande.nl?subject=[AzureCodingArchitect]", icon = "fa fa-envelope" },
       { link = "/index.xml", icon = "fas fa-rss" }
     ]
