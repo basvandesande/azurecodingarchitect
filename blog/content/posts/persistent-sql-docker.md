@@ -8,7 +8,7 @@ featuredImage :  "/sqldocker/sqldocker-feature.png"
 tags :  
   - Docker
   - SQL Server 
-  - C#
+  - Csharp
 categories :  
   - development
 draft :  false

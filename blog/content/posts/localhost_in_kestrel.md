@@ -8,7 +8,7 @@ featuredImage :  "/kestrel/kestrel-feature.png"
 categories: 
     - technical
 tags: 
-    - C#
+    - Csharp
     - debug
     - troubleshooting
 toc: false

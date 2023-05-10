@@ -6,7 +6,7 @@ author : "Bas van de Sande"
 date : 2022-08-01T12:32:35+02:00
 featuredImage : "/ota/ota-feature.png"
 tags :  
-    - C#
+    - Csharp
     - nanoframework
     - IoT
     - azure

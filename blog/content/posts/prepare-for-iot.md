@@ -6,7 +6,7 @@ author : "Bas van de Sande"
 date : 2022-03-15T20:28:06+02:00
 featuredImage : "/prepareiot/iot-feature.png"
 tags :  
-    - C#
+    - Csharp
     - nanoframework
     - IoT
 categories : 

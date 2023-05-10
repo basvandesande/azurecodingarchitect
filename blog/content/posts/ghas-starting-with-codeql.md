@@ -8,7 +8,7 @@ featuredImage :  "/ghas/ghas-feature.png"
 tags :  
     - GitHub Advanced Security
     - GHAS
-    - C#
+    - Csharp
     - troubleshooting
     - Code scanning
 categories : 

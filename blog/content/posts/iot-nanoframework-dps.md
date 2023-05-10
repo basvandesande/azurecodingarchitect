@@ -6,7 +6,7 @@ author : "Bas van de Sande"
 date : 2022-04-28T21:09:06+02:00
 featuredImage : "/dps/dps-feature.png" 
 tags :  
-    - C#
+    - Csharp
     - nanoframework
     - IoT
     - Azure
