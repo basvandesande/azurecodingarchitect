@@ -15,8 +15,8 @@ target: "_blank"
 ---
 
 # Introduction
-A couple of years ago I developed the Entity Relationship Diagram Creator XRMToolbox plug-in, as a community tool. Shortly after ny focus was on the Azure space and the JourneyIntoCRM.com blog vanished into oblivion. 
-Fast forward to may 2023... I was preparing for the Microsoft Certified: PowerPlatform Solution Architect Expert certification. 
+A couple of years ago I developed the Entity Relationship Diagram Creator XRMToolbox plug-in, as a community tool. Shortly after, my focus was more-and-more on the Azure space and the JourneyIntoCRM.com blog vanished into oblivion. 
+Fast forward to may 2023... I was preparing for the Microsoft Certified: Power Platform Solution Architect Expert certification. 
 
 While preparing I noticed that Microsoft recommended this plug-in to visualize datamodels in the Dataverse. For me a nice opportunity to overhaul the toolbox plug-in and to bring it back to life again.  First step... reinstate the user manual and update the plug-in to reference to the new documentation location.
 
