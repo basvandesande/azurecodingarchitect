@@ -18,7 +18,7 @@ After joining the organization using my personal Github account, I'm able to wor
 
 Then the moment comes that I need to clone the repository, which can be a hassle from time-to-time. Normally I clone the repository using VSCode. After cloning the repository, I start working by adding my own features. 
 
-From time to times, when I want to pull code or push my feature branch to the origin, I get confronted with an error message: 
+Sometimes when I want to pull code or push my feature branch to the origin, I get confronted with an error message: 
 
 ```
 remote: The organization has enabled or enforced SAML SSO. To access
