@@ -4,7 +4,7 @@ subtitle :  "Inconsistent documentation and imcompatible versions"
 description :  "Troubleshooting getting Azure Frontdoor up and running in Bicep"
 author: "Bas van de Sande"
 featuredImage : "/frontdoor/frontdoor-feature.png"
-date: 2023-07-18T15:36:57+02:00
+date: 2023-07-18T22:36:57+02:00
 tags: 
     - Azure
     - Frontdoor
