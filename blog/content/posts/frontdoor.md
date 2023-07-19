@@ -45,7 +45,7 @@ In the FrontDoor Standard/Premium, the problems start when you are following the
 
 Each time I ran my GitHub workflow in order to deploy the Frontdoor, I ended up with the following exception.
 
-_**BadRequest: Expected secret source id to be in the format '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup Name}/providers/Microsoft.KeyVault/vaults/{keyVaultName}/ certificates/{secretName}/{secretVersion - if applicable}**_
+_**BadRequest: Expected secret source id to be in the format '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/ providers/Microsoft.KeyVault/vaults/{keyVaultName}/certificates/ {secretName}/{secretVersion - if applicable}**_
 
 
 No matter what I tried, looking up existing resources, manually creating the the resourceId string. Each time I was confronted with the same exception. It drove me mad.
