@@ -18,13 +18,22 @@ draft: false
 
 For some reason I seem to attract the most exotic scenarios when it comes to building Infrastructure as Code (IaC). This time it was no different. For a client I'm working on building an environment in which disaster recovery is a top priority. Besides being zone redundant, the client requires region redundancy as well, in case a complete Azure region gets wiped out by a disaster or a combination of disasters... My imagination gets triggered and I envision all kinds of apocalyptic movie scenarios.    
 
-When it comes to region redundancy Mirosoft states that Azure regions should have a distance in between of at elast 300 miles (480 km). In this case my client is building a redundant infrastructure in both West Europe and in its region pair North Europe. In case both regions are wiped out at the same time, we have other problems and Azure won't be one of them :P
+When it comes to region redundancy Mirosoft states that Azure regions should have a distance in between of at least 300 miles (480 km). In this case my client is building a redundant infrastructure in both West Europe and in its region pair North Europe. In case both regions are wiped out at the same time, we have other problems and Azure won't be one of them :P
 
 ## The scenario:
-The client has a number of websites that are accessible from over the internet. Instead of exposing the websites directly to the internet, the websites are tucked away behind an hardened Azure Application Gateway. The application gateway is responsible for redirecting the web traffic to the corresponding app services. All traffic is encrypted using SSL, meaning that a keyvault is used to store the SSL certificates.
+The client has a number of websites that are accessible from over the internet. Instead of exposing the websites directly to the internet, the websites are tucked away behind an hardened Azure Application Gateway. The application gateway is responsible for redirecting the web traffic to the corresponding app services. All traffic is encrypted using SSL, meaning that a keyvault is used to store the SSL certificates. 
+
+![Single region](/frontdoor/frontdoor-single.png)
+
 This infrastructure needs to be available in both regions, in which we consider West Europe as the primary region and North Europe as the secondary. 
 
-In our scenario, we don't want customers having to use different URL's for accessing websites in West Europe or in North Europe. They all should listen to the same URLs. To facilitate this, Azure has an offering called FrontDoor, a technology which emerged from the Xbox Live era. This is where the pain starts...
+In our scenario, we don't want customers having to use different URL's for accessing websites in West Europe or in North Europe. They all should listen to the same URLs. To facilitate this, Azure has an offering called FrontDoor, a technology which emerged from the Xbox Live era. 
+
+![Paired regions](/frontdoor/frontdoor-regions.png)
+
+Basically Azure FrontDoor (AFD) is a Level 7 load balancer, tailored to route Http and Https traffic. The idea that we had, was to put FrontDoor in front of the Application Gateway (AGW) instances we have in both regions. Then associate the public URLs with Frontdoor. From there, FrontDoor needs to be setup to route the web traffic to our primary region. 
+
+With this in mind I started to write the Bicep code required to facilitate this... and this is where the pain started...
 
 ## Different technologies
 It turns out that the FrontDoor concept is basically two different technologies: Frontdoor Classic and Frontdoor Standard/Premium. The object models of the versions are very different and internally there is a plethora of versions. Versions that turn out to be incompatible with each other.
