@@ -16,7 +16,7 @@ categories:
 draft: false
 ---
 
-For some reason I seem to attract the most exotic scenarios when it comes to building Infrastructure as Code (IaC), this time it was no different. For a client I'm working on building an environment in which disaster recovery is a top priority. Besides being zone redundant, the client requires region redundancy as well, in case a complete Azure region gets wiped out by a disaster or a combination of disasters... My imagination gets triggered and I envision all kinds of apocalyptic movie scenarios.    
+For some reason I seem to attract the most exotic scenarios when it comes to building Infrastructure as Code (IaC). This time it was no different. For a client I'm working on building an environment in which disaster recovery is a top priority. Besides being zone redundant, the client requires region redundancy as well, in case a complete Azure region gets wiped out by a disaster or a combination of disasters... My imagination gets triggered and I envision all kinds of apocalyptic movie scenarios.    
 
 When it comes to region redundancy Mirosoft states that Azure regions should have a distance in between of at elast 300 miles (480 km). In this case my client is building a redundant infrastructure in both West Europe and in its region pair North Europe. In case both regions are wiped out at the same time, we have other problems and Azure won't be one of them :P
 
