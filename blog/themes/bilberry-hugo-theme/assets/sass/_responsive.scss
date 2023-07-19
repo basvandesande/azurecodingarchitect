@@ -8,7 +8,7 @@
 
         .container {
             flex-direction: column-reverse;
-            padding: 0 1.5em;
+            padding: 0 1em;
 
             .topnav {
                 flex-direction: column;
@@ -47,7 +47,7 @@
         }
 
         .toggler {
-            right: 1.5em;
+            right: 1em;
 
             &.permanentTopNav {
                 display: block;
