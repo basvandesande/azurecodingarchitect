@@ -5871,7 +5871,7 @@ img.mfp-img{
 .mfp-gallery .mfp-image-holder .mfp-figure{
     cursor:pointer
 }
-@media screen and (max-height:300px),screen and (max-width:800px) and (orientation:landscape){
+@media screen and (max-height:300px),screen and (max-width:1000px) and (orientation:landscape){
     .mfp-img-mobile .mfp-image-holder{
         padding-left:0;
         padding-right:0
@@ -6125,7 +6125,7 @@ img.mfp-img{
     font-size:15pt
 }
 .bilberry-hugo-theme .container{
-    width:800px;
+    width:1000px;
     max-width:100%
 }
 .bilberry-hugo-theme .ulist{
@@ -6997,7 +6997,7 @@ img.mfp-img{
 .bilberry-hugo-theme .credits .container:after{
     display:none
 }
-@media (max-width:800px){
+@media (max-width:1000px){
     .bilberry-hugo-theme nav.permanentTopNav{
         display:none
     }
