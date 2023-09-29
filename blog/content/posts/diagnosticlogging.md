@@ -12,7 +12,7 @@ tags:
 categories: 
     - technical
     - development
-draft: true
+draft: false
 ---
 
 I'm a big fan of Azure and building infrastructure on it using IaC (Infrastructure as Code) and deploy it through pipelines (Azure DevOps) or workflows (Github). The last two years, I primarily used Bicep to build the infrastructure. Often this is a very satisfying experience but in some cases it can be quite frustrating. Frustrating because I can't find the information that I need in the MS Learn documentation at the location where I would expect it to be.
