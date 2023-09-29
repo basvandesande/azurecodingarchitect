@@ -54,7 +54,7 @@ The screen shows the friendly names of the log categories, while we need the tec
 
 I copied the information and closed the screen. Using this information, it turned out to be simple to setup Diagnostic logging in Bicep. First I could lookup what resource I needed `Microsoft.Insights/diagnosticSettings` to get the proper syntax. Using that I could use the technical names of the categories that I needed in my Log Analytics Workspace.  In the Bicep for the diagnosticSettings I needed to set the scope to the previous created AKS cluster by using its symbolic name. 
 
-```bicep
+```c#
 @description('Log Analytics workspace name')
 param existingWorkspaceName string
 param existingSubscriptionId string
