@@ -52,7 +52,7 @@ The screen shows the friendly names of the log categories, while we need the tec
 
 ![](/diags/diags-aks-json-detail.png)
 
-I copied the information and closed the screen. Using this information, it turned out to be simple to setup Diagnostic logging in Bicep. First I could lookup what resource I needed `Microsoft.Insights/diagnosticSettings` to get the proper syntax. Using that I could use the technical names of the categories that I needed in my Log Analytics Workspace.  In the Bicep for the diagnosticSettings I needed to set the scope to the previous created AKS cluster by using its symbolic name. 
+I copied the information and closed the screen. Using this information, it turned out to be simple to setup Diagnostic logging in Bicep. First I could lookup what resource I needed - `Microsoft.Insights/diagnosticSettings` - to get the proper syntax. Using that I could use the technical names of the categories that I needed in my Log Analytics Workspace.  In the Bicep for the diagnosticSettings I needed to set the scope to the previous created AKS cluster by using its symbolic name. 
 
 ```c#
 @description('Log Analytics workspace name')
@@ -134,7 +134,7 @@ After running the Bicep in my workflow, I reopened the Azure Portal and went to 
 
 ![Result....](/diags/diags-aks-result.png)
 
-Setting up diagnostic settings was not that hard, finding out what I needed to configure was more cumberstone. It wpuld be of so much more help if Microsoft had set ip its documentation in a way that you could find all related information in the same section. Thus referencing to related objects, describing technical names etc... The pattern is the same all kinds of resources: Setup the diagnostic settings with specific values then scope it to the correct resource.
+Setting up diagnostic settings was not that hard, finding out what I needed to configure was more cumberstone. It would be of so much more help if Microsoft had set ip its documentation in a way that you could find all related information in the same section. Thus referencing to related objects, describing technical names etc... The pattern is the same all kinds of resources: Setup the diagnostic settings with specific values then scope it to the correct resource.
 
 It would save a lot of time for many developers.
 
