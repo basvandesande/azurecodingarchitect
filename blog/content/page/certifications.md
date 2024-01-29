@@ -5,7 +5,7 @@ draft: false
 excludeFromTopNav: false
 
 # set the link if you want to redirect the user.
-link: "https://www.credly.com/users/bas-van-de-sande/badges"
+link: "https://learn.microsoft.com/en-us/users/basvandesande-8898/transcript/vmzk8agyxgwpjkn"
 # set the html target parameter if you want to change default behavior
 target: "_blank"
 ---
