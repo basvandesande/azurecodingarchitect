@@ -155,7 +155,7 @@ disqusShortname = ""
     ]
 
    # about me
-   aboutMeLink =  { link = "https://xpirit.com/team/bas-van-de-sande/", icon = "fas fa-robot" }
+   aboutMeLink =  { link = "https://www.linkedin.com/in/basvandesande/", icon = "fas fa-robot" }
 
     # credits line configuration
     copyrightBy = "- Bas van de Sande - all rights reserved"
@@ -198,5 +198,5 @@ disqusShortname = ""
 
   [markup.tableOfContents]
     endLevel = 5
-    ordered = false
+    ordered = true
     startLevel = 2
