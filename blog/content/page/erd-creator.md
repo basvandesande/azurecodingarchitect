@@ -7,7 +7,7 @@ author : "Bas van de Sande"
 date: 2023-05-21T10:51:20+02:00
 draft: false
 excludeFromTopNav: false
-
+weight: 100 
 # set the link if you want to redirect the user.
 link: ""
 # set the html target parameter if you want to change default behavior
