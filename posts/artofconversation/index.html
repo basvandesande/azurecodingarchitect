@@ -1,0 +1,225 @@
+<!doctype html><html class=no-js lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=siteBaseUrl content="https://azurecodingarchitect.com/"><meta name=author content="Bas van de Sande"><meta name=description content="Tinkering with Azure and other technologies"><meta name=keywords content="blog,azure,cosmosdb,aks,kubernetes,k3s,docker,c#,visualstudio,architecture,technology,xpirit"><meta name=generator content="Hugo 0.144.2"><title>The Art of Conversation | Azure Coding Architect
+</title><meta name=description content="A functional approach on software development"><meta itemprop=name content="The Art of Conversation"><meta itemprop=description content="A functional approach on software development"><meta property="og:title" content="The Art of Conversation"><meta property="og:description" content="A functional approach on software development"><meta property="og:image" content="https://azurecodingarchitect.com/artcon/artcon-feature.png"><meta property="og:url" content="https://azurecodingarchitect.com/posts/artofconversation/"><meta property="og:site_name" content="Azure Coding Architect"><meta property="og:type" content="article"><script src=/modernizr-simple.js></script><link href=/posts/artofconversation/ rel=alternate type=application/rss+xml title="Azure Coding Architect"><link href=/posts/artofconversation/ rel=feed type=application/rss+xml title="Azure Coding Architect"><link rel=canonical href=https://azurecodingarchitect.com/posts/artofconversation/><link rel=stylesheet href=https://azurecodingarchitect.com/theme.css></head><body class=bilberry-hugo-theme><nav><div class=container><ul class=topnav><li><a href=https://www.linkedin.com/in/basvandesande/ target=_blank>About Me</a></li><li><a href=https://learn.microsoft.com/en-us/users/basvandesande-8898/transcript/vmzk8agyxgwpjkn target=_blank>Certifications (MS)</a></li><li><a href=https://azurecodingarchitect.com/page/erd-creator/>Entity Relationship Diagram Creator</a></li><li><a href=https://www.credly.com/users/bas-van-de-sande/badges target=_blank>Certifications on Credly</a></li></ul></div></nav><header><div class=container><div class=logo><a href=/ class=logo><img src=/bas.png alt>
+<span class=overlay><i class="fa fa-home"></i></span></a></div><div class=titles><h3 class=title><a href=/>Azure Coding Architect</a></h3><span class=subtitle>Tinkering in the cloud...</span></div><div class=toggler><i class="fa fa-bars" aria-hidden=true></i></div></div></div></header><div class="main container"><div class="article-wrapper u-cf single"><a class=bubble href=https://azurecodingarchitect.com/posts/artofconversation/><i class="fas fa-fw fa-pencil-alt"></i></a><article class="default article"><div class=featured-image><a href=https://azurecodingarchitect.com/posts/artofconversation/><img src=/artcon/artcon-feature.png alt></a></div><div class=content><h1 class=article-title><a href=https://azurecodingarchitect.com/posts/artofconversation/>The Art of Conversation</a></h1><div class=meta><span class="date moment">2025-02-22</span>
+<span class=readingTime>7 min read</span>
+<span class=categories><a href=https://azurecodingarchitect.com/categories/development/>Development</a>
+</span><span class=author><a href=https://azurecodingarchitect.com/author/bas-van-de-sande/>Bas Van De Sande</a></span></div><p>In the 1990&rsquo;s when I did my bachelor in computer science, teachers told us that we would be replaced by 4GL languages. Languages in which end-users would describe how applications should work. At that time we laughed at them, saying we saw the exact opposite. Oh dear, we were right. Code became complexer, new concepts arrived on the horizon and software development matured. Fast forward to the 2020&rsquo;s&mldr;</p><p>Over the last year, I&rsquo;ve been giving a lot of GitHub Copilot training sessions world wide. Sessions in which I learned the attendees what GitHub Copilot could mean for them and how they could get the most out of it. In that time I noticed that I was particular a fan of GitHub Copilot chat. A Chat interface in which I could talk to my bestie, asking him all kinds of questions. My bestie would answer my questions as good as possible.</p><p>I&rsquo;m an avid runner, and in order to do my trainings in the cold dark winter months as well I purchased a treadmill. This treadmill came with a companion app - that eventually required a subscription to get the most out of it. As a user I was frustrated and upset, I decided to build my own companion app. A real challenge.</p><h2 id=where-to-start>Where to start?</h2><p>Finding out what protocol was being used, write library to control the device, dive into mobile app development as I want the companion to run on my Android tablet, work with GPX data to run previous ran tracks, visualizing data, etc. This lead me into a modus in which I started to find coding solutions for all these problems and one of those problems was visualization.</p><p>In my head I envisioned imagery in which I see over the course of the track all hills that I need to ascend or descend. Showing the actual GPS height in relation to the actual distance.</p><p><img src=/artcon/artcon-stelvio.jpeg alt="Height chart of the Stelvio"></p><p>In order to create this image, I opened GitHub Copilot and started my first prompts. While doing that I got annoyed by the cramped real estate on my desktop. I switched over to Microsoft Copilot in the browser.</p><p><img src=/artcon/artcon-bing-copilot.png alt="Copilot in Bing search page"></p><h2 id=building-the-visual-using-just-conversation>Building the visual using just conversation</h2><p>I remembered the teachers&rsquo; talk about 4GL&rsquo;s, and I decided if I as an end user was capable of writing code by just telling what I my intend was. So it began. It took me 9 prompts to come the visual chart above. One prompt for setting the context, Eight prompts to do all the mark up. I&rsquo;ll show you how:</p><h3 id=context-first>Context first</h3><p>I entered a very explicit context telling what I wanted to achieve and indicating what was important for me. A clear context makes or breaks the conversation. Copilot knew at that point what I wanted to achieve and that platform independency and C# are prerequisites.</p><p><img src=/artcon/artcon-chat1.png alt="Set the context"></p><h3 id=keep-refining>Keep refining</h3><p>I pasted the code suggestion in Visual Studio, added the library packages and compiled the code. A graph was rendered and stored to a file. <strong>Boom!</strong></p><p>Needless to say that I needed to add some more refinement. So I fired the next prompts to get me to the result that I needed.
+During the refining I switched to my native language (which is Dutch) and Copilot followed me along not hindered by any switching. For me this was a big convenience, because things get less complicated when thinking natively :)</p><p><img src=/artcon/artcon-chat2.png alt="Refining, till we get there"></p><h2 id=the-result>The result</h2><p>Just by having a conversation, I managed to build the basic functionality that I envisioned.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot.Axes;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot.Series;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot.SkiaSharp;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Program</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> Main(<span style=color:#66d9ef>string</span>[] args)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> plotModel = <span style=color:#66d9ef>new</span> PlotModel { Title = <span style=color:#e6db74>&#34;Line Graph with Larger Axis Labels&#34;</span> };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> lineSeries = <span style=color:#66d9ef>new</span> LineSeries
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Title = <span style=color:#e6db74>&#34;Line Series&#34;</span>,
+</span></span><span style=display:flex><span>            MarkerType = MarkerType.Circle
+</span></span><span style=display:flex><span>        };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Add points to the line series</span>
+</span></span><span style=display:flex><span>        lineSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>));
+</span></span><span style=display:flex><span>        lineSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>1000</span>, <span style=color:#ae81ff>2</span>));
+</span></span><span style=display:flex><span>        lineSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>2000</span>, <span style=color:#ae81ff>4</span>));
+</span></span><span style=display:flex><span>        lineSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>3000</span>, <span style=color:#ae81ff>8</span>));
+</span></span><span style=display:flex><span>        lineSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>4000</span>, <span style=color:#ae81ff>16</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        plotModel.Series.Add(lineSeries);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Create an area series to fill the area under the line series</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> areaSeries = <span style=color:#66d9ef>new</span> AreaSeries
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Color = OxyColors.LightBlue,
+</span></span><span style=display:flex><span>            Fill = OxyColors.LightBlue,
+</span></span><span style=display:flex><span>            StrokeThickness = <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>        };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Add points to the area series</span>
+</span></span><span style=display:flex><span>        areaSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>1000</span>, <span style=color:#ae81ff>2</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>2000</span>, <span style=color:#ae81ff>4</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>3000</span>, <span style=color:#ae81ff>8</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>4000</span>, <span style=color:#ae81ff>16</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Add the baseline points to close the area</span>
+</span></span><span style=display:flex><span>        areaSeries.Points2.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points2.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>1000</span>, <span style=color:#ae81ff>0</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points2.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>2000</span>, <span style=color:#ae81ff>0</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points2.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>3000</span>, <span style=color:#ae81ff>0</span>));
+</span></span><span style=display:flex><span>        areaSeries.Points2.Add(<span style=color:#66d9ef>new</span> DataPoint(<span style=color:#ae81ff>4000</span>, <span style=color:#ae81ff>0</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        plotModel.Series.Add(areaSeries);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Add vertical lines at each x-axis value</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i = <span style=color:#ae81ff>0</span>; i &lt;= <span style=color:#ae81ff>4000</span>; i += <span style=color:#ae81ff>1000</span>)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> verticalLine = <span style=color:#66d9ef>new</span> LineAnnotation
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                Type = LineAnnotationType.Vertical,
+</span></span><span style=display:flex><span>                X = i,
+</span></span><span style=display:flex><span>                Color = OxyColors.Gray,
+</span></span><span style=display:flex><span>                LineStyle = LineStyle.Dash
+</span></span><span style=display:flex><span>            };
+</span></span><span style=display:flex><span>            plotModel.Annotations.Add(verticalLine);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Set the x-axis to units of 1000 with larger font size</span>
+</span></span><span style=display:flex><span>        plotModel.Axes.Add(<span style=color:#66d9ef>new</span> LinearAxis
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Position = AxisPosition.Bottom,
+</span></span><span style=display:flex><span>            Minimum = <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>            Maximum = <span style=color:#ae81ff>4000</span>,
+</span></span><span style=display:flex><span>            MajorStep = <span style=color:#ae81ff>1000</span>,
+</span></span><span style=display:flex><span>            Title = <span style=color:#e6db74>&#34;X-Axis (units of 1000)&#34;</span>,
+</span></span><span style=display:flex><span>            FontSize = <span style=color:#ae81ff>16</span> <span style=color:#75715e>// Set font size for x-axis labels</span>
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Add the y-axis to track height with larger font size</span>
+</span></span><span style=display:flex><span>        plotModel.Axes.Add(<span style=color:#66d9ef>new</span> LinearAxis
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            Position = AxisPosition.Left,
+</span></span><span style=display:flex><span>            Minimum = <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>            Maximum = <span style=color:#ae81ff>20</span>,
+</span></span><span style=display:flex><span>            MajorStep = <span style=color:#ae81ff>2</span>,
+</span></span><span style=display:flex><span>            Title = <span style=color:#e6db74>&#34;Height&#34;</span>,
+</span></span><span style=display:flex><span>            FontSize = <span style=color:#ae81ff>16</span> <span style=color:#75715e>// Set font size for y-axis labels</span>
+</span></span><span style=display:flex><span>        });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Create a scatter series for the red point</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> scatterSeries = <span style=color:#66d9ef>new</span> ScatterSeries
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            MarkerType = MarkerType.Circle,
+</span></span><span style=display:flex><span>            MarkerFill = OxyColors.Red,
+</span></span><span style=display:flex><span>            MarkerSize = <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>        };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Add the red point</span>
+</span></span><span style=display:flex><span>        scatterSeries.Points.Add(<span style=color:#66d9ef>new</span> ScatterPoint(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>4</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        plotModel.Series.Add(scatterSeries);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Export the plot to a PNG file</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>using</span> (<span style=color:#66d9ef>var</span> stream = <span style=color:#66d9ef>new</span> System.IO.FileStream(<span style=color:#e6db74>&#34;linegraph_with_larger_axis_labels.png&#34;</span>, System.IO.FileMode.Create))
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> exporter = <span style=color:#66d9ef>new</span> PngExporter { Width = <span style=color:#ae81ff>600</span>, Height = <span style=color:#ae81ff>400</span> };
+</span></span><span style=display:flex><span>            exporter.Export(plotModel, stream);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        Console.WriteLine(<span style=color:#e6db74>&#34;Line graph with larger axis labels saved as linegraph_with_larger_axis_labels.png&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>All for me left to do, was to pick up this code and refactor it manually to a class to work with my actual GPX data (see code sample below).</p><p>It turned out in the end, that the teachers back then used to have a valid point. One day we might lose our job, but not because of 4GL. For the foreseabale future I see that Artificial Intelligence will change the way we write code, by focussing on adding functionality rather than focussing on technicalities. Functionality that we can achieve by having a conversation, in which you have to be concise. A direction in software development that I embrace.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot.Annotations;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot.Axes;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot.Series;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> OxyPlot.SkiaSharp;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>namespace</span> Re_RunGPX
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>internal</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>GraphPlotter</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> PlotGraph(GpxProcessor gpx, <span style=color:#66d9ef>string</span> outputFile)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>double</span> maxDistance = (<span style=color:#66d9ef>double</span>)(gpx.Tracks.Last().TotalDistanceInMeters / <span style=color:#ae81ff>1000</span>) * <span style=color:#ae81ff>1000</span>;
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (maxDistance&lt;<span style=color:#ae81ff>1000</span>) maxDistance = <span style=color:#ae81ff>1000</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>double</span> minElevation = gpx.FindMinimumElevation();
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>double</span> maxElevation = gpx.FindMaximumElevation();
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>int</span> elevationScale = maxElevation &gt; <span style=color:#ae81ff>100</span>? <span style=color:#ae81ff>100</span> : <span style=color:#ae81ff>10</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> plotModel = <span style=color:#66d9ef>new</span> PlotModel { Title = <span style=color:#e6db74>&#34;Re-Run Virtual Run&#34;</span> };
+</span></span><span style=display:flex><span>            plotModel.Background = OxyColors.White;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            Random random = <span style=color:#66d9ef>new</span> Random();
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>int</span> randomIndex = random.Next(<span style=color:#ae81ff>0</span>, gpx.Tracks.Length - <span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            plotModel.Axes.Add(<span style=color:#66d9ef>new</span> LinearAxis
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                Position = AxisPosition.Bottom,
+</span></span><span style=display:flex><span>                Minimum = <span style=color:#ae81ff>0</span>,
+</span></span><span style=display:flex><span>                Maximum = maxDistance,
+</span></span><span style=display:flex><span>                MajorStep = <span style=color:#ae81ff>1000</span>,
+</span></span><span style=display:flex><span>                Title = <span style=color:#e6db74>&#34;Distance (meters)&#34;</span>,
+</span></span><span style=display:flex><span>                FontSize = <span style=color:#ae81ff>20</span>
+</span></span><span style=display:flex><span>            });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            plotModel.Axes.Add(<span style=color:#66d9ef>new</span> LinearAxis
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                Position = AxisPosition.Left,
+</span></span><span style=display:flex><span>                Minimum = (<span style=color:#66d9ef>double</span>)((minElevation/<span style=color:#ae81ff>10</span>) * <span style=color:#ae81ff>10</span>),
+</span></span><span style=display:flex><span>                Maximum = (<span style=color:#66d9ef>double</span>)(maxElevation + elevationScale),
+</span></span><span style=display:flex><span>                MajorStep = elevationScale,
+</span></span><span style=display:flex><span>                Title = <span style=color:#e6db74>&#34;Height (meters)&#34;</span>,
+</span></span><span style=display:flex><span>                FontSize = <span style=color:#ae81ff>20</span>
+</span></span><span style=display:flex><span>            });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> areaSeries = <span style=color:#66d9ef>new</span> AreaSeries
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                Title = <span style=color:#e6db74>&#34;Elevation&#34;</span>,
+</span></span><span style=display:flex><span>                Color = OxyColors.Green,
+</span></span><span style=display:flex><span>                Fill = OxyColors.LightGreen,
+</span></span><span style=display:flex><span>                StrokeThickness = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>            };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> track <span style=color:#66d9ef>in</span> gpx.Tracks)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                areaSeries.Points.Add(<span style=color:#66d9ef>new</span> DataPoint((<span style=color:#66d9ef>double</span>)track.TotalDistanceInMeters, (<span style=color:#66d9ef>double</span>)track.EndElevation));
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            plotModel.Series.Add(areaSeries);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i = <span style=color:#ae81ff>1000</span>; i &lt;= (<span style=color:#66d9ef>int</span>)maxDistance; i+=<span style=color:#ae81ff>1000</span>)
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>var</span> verticalLine = <span style=color:#66d9ef>new</span> LineAnnotation
+</span></span><span style=display:flex><span>                {
+</span></span><span style=display:flex><span>                    Type = LineAnnotationType.Vertical,
+</span></span><span style=display:flex><span>                    X = i,
+</span></span><span style=display:flex><span>                    Color = OxyColors.Gray,
+</span></span><span style=display:flex><span>                    LineStyle = LineStyle.Dash
+</span></span><span style=display:flex><span>                };
+</span></span><span style=display:flex><span>                plotModel.Annotations.Add(verticalLine);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Create a scatter series for the red point</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> scatterSeries = <span style=color:#66d9ef>new</span> ScatterSeries
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                MarkerType = MarkerType.Diamond,
+</span></span><span style=display:flex><span>                MarkerStroke = OxyColors.Red,
+</span></span><span style=display:flex><span>                MarkerFill = OxyColors.Orange,
+</span></span><span style=display:flex><span>                MarkerSize = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>            };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Add the red point  </span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// TODO: make this a real point not a random one</span>
+</span></span><span style=display:flex><span>            scatterSeries.Points.Add(<span style=color:#66d9ef>new</span> ScatterPoint((<span style=color:#66d9ef>double</span>)gpx.Tracks[randomIndex].TotalDistanceInMeters, 
+</span></span><span style=display:flex><span>                                                      (<span style=color:#66d9ef>double</span>)gpx.Tracks[randomIndex].EndElevation));
+</span></span><span style=display:flex><span>            plotModel.Series.Add(scatterSeries);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>using</span> (<span style=color:#66d9ef>var</span> stream = <span style=color:#66d9ef>new</span> System.IO.FileStream(outputFile, System.IO.FileMode.Create))
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>var</span> pngExporter = <span style=color:#66d9ef>new</span> PngExporter { Width = <span style=color:#ae81ff>2400</span>, Height = <span style=color:#ae81ff>1000</span> };
+</span></span><span style=display:flex><span>                pngExporter.Export(plotModel, stream);
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div><div class=footer><div class=tags><i class="fa fa-tags"></i><div class=links><a href=https://azurecodingarchitect.com/tags/copilot/>Copilot</a>
+<a href=https://azurecodingarchitect.com/tags/artificial-intelligence/>Artificial Intelligence</a></div></div></div></article></div><div id=comments-container><script src=https://giscus.app/client.js data-repo=basvandesande/azurecodingarchitect data-repo-id=R_kgDOG3nWLg data-category=General data-category-id=DIC_kwDOG3nWLs4CBPIU data-mapping=pathname data-reactions-enabled=1 data-emit-metadata data-theme=light data-lang=en crossorigin=anonymous async></script><div id=giscus></div></div></div><footer><div class=container><div class=recent-posts><strong>Latest posts</strong><ul><li><a href=https://azurecodingarchitect.com/posts/artofconversation/>The Art of Conversation</a></li><li><a href=https://azurecodingarchitect.com/posts/github-context/>Quick tip: Get in control by using your GitHub context</a></li><li><a href=https://azurecodingarchitect.com/posts/find-rbac-permissions/>Quick tip: Find permissions in RBAC roles easily</a></li><li><a href=https://azurecodingarchitect.com/posts/diagnosticlogging/>Where is that documentation? A tale on setting up diagnostic settings...</a></li><li><a href=https://azurecodingarchitect.com/posts/frontdoor/>A nightmare on FrontDoor in Bicep...</a></li><li><a href=https://azurecodingarchitect.com/posts/gitcredentials/>Note to self: fix invalid GitHub credentials in VSCode</a></li><li><a href=https://azurecodingarchitect.com/posts/ghas-starting-with-codeql/>GHAS - How to use CodeQL custom queries?</a></li></ul></div><div class=categories><a href=/categories/><strong>Categories</strong></a><ul><li><a href=/categories/development>Development
+(9)</a></li><li><a href=/categories/general>General
+(7)</a></li><li><a href=/categories/technical>Technical
+(6)</a></li><li><a href=/categories/technology>Technology
+(4)</a></li><li><a href=/categories/machine-learning>Machine learning
+(1)</a></li><li><a href=/categories/tips-and-tricks>Tips and tricks
+(1)</a></li><li><a href=/categories/troubleshooting>Troubleshooting
+(1)</a></li></ul></div><div class=right><div class=external-profiles><strong>Social media</strong>
+<a href=https://twitter.com/basvandesande target=_blank><i class="fab fa-twitter"></i></a>
+<a href=https://linkd.in/basvandesande target=_blank><i class="fab fa-linkedin"></i></a>
+<a href="mailto:bas@vd-sande.nl?subject=[AzureCodingArchitect]" target=_blank><i class="fa fa-envelope"></i></a>
+<a href=/index.xml target=_blank><i class="fas fa-rss"></i></a></div><div class=external-profiles><strong>About me</strong>
+<a href=https://www.linkedin.com/in/basvandesande/ target=_blank><i class="fas fa-robot" &nbsp;></i></a></div></div></div></footer><div class=credits><div class=container><div class=copyright><a href=https://azurecodingarchitect.com target=_blank>&copy;
+2025
+- Bas van de Sande - all rights reserved</div><div class=author><a href=https://github.com/Lednerb/bilberry-hugo-theme target=_blank>Bilberry Hugo theme</a></div></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=Disable"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","Disable")}</script><script type=text/javascript src=https://azurecodingarchitect.com/theme.js></script></body></html>
