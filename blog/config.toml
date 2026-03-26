@@ -1,5 +1,5 @@
-title = "Azure Coding Architect"
-baseURL = "https://azurecodingarchitect.com/"
+title = "Coding Architect"
+baseURL = "https://codingarchitect.eu/"
 
 # using theme locally (git clone, submodule or as zip)
 theme = "bilberry-hugo-theme"
@@ -29,8 +29,8 @@ disqusShortname = ""
 
   # Description and meta data for the search engines
   author = "Bas van de Sande"
-  description = "Tinkering with Azure and other technologies"
-  keywords = "blog,azure,cosmosdb,aks,kubernetes,k3s,docker,c#,visualstudio,architecture,technology,xpirit"
+  description = "Tinkering with cloud and other technologies"
+  keywords = "opensource, blog,azure,cosmosdb,aks,kubernetes,k3s,docker,c#,visualstudio,architecture,technology,xpirit"
 
   # How many articles should be displayed at once?
   paginate = 7
@@ -80,7 +80,7 @@ disqusShortname = ""
 
   # Header configuration
     # your subtitle if you want to use any
-    subtitle = "Tinkering in the cloud..."
+    subtitle = "Tinkering with cloud and opensource technologies..."
 
     # if you want to use libravatar or gravatar for the header image
     avatarEmail = ""
@@ -148,9 +148,9 @@ disqusShortname = ""
     # all icons https://fontawesome.com/icons?d=gallery&m=free
     # brand icons https://fontawesome.com/icons?d=gallery&s=brands&m=free
     socialMediaLinks = [
-      { link = "https://twitter.com/basvandesande", icon = "fab fa-twitter" },
+      { link = "https://github.com/basvandesande", icon = "fab fa-github" }, 
       { link = "https://linkd.in/basvandesande", icon = "fab fa-linkedin" },
-      { link = "mailto:bas@vd-sande.nl?subject=[AzureCodingArchitect]", icon = "fa fa-envelope" },
+      { link = "mailto:bas@vd-sande.nl?subject=[CodingArchitect]", icon = "fa fa-envelope" },
       { link = "/index.xml", icon = "fas fa-rss" }
     ]
 
@@ -161,7 +161,7 @@ disqusShortname = ""
     copyrightBy = "- Bas van de Sande - all rights reserved"
     copyrightUseCurrentYear = true  # set to true to always display the current year in the copyright
     copyrightYearOverride = "2021+"
-    copyrightUrl = "https://azurecodingarchitect.com"
+    copyrightUrl = "https://codingarchitect.eu"
     
     # Theme
     creditsText = "Bilberry Hugo theme"
